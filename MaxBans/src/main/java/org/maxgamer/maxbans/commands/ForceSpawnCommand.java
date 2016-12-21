@@ -18,13 +18,16 @@ public class ForceSpawnCommand extends CmdSkeleton {
         if (args.length > 0) {
             final String name = args[0];
             String banner;
+
             if (sender instanceof Player) {
                 banner = sender.getName();
             }
             else {
                 banner = "Console";
             }
+
             final Player p = Bukkit.getPlayer(name);
+
             if (p != null) {
                 final PlayerRespawnEvent e = new PlayerRespawnEvent(p, Bukkit.getWorlds().get(0).getSpawnLocation(), false);
                 Bukkit.getPluginManager().callEvent(e);
@@ -37,8 +40,10 @@ public class ForceSpawnCommand extends CmdSkeleton {
             else {
                 sender.sendMessage(Formatter.primary + "No player found: " + Formatter.secondary + name);
             }
+
             return true;
         }
+
         sender.sendMessage(this.getUsage());
         return true;
     }

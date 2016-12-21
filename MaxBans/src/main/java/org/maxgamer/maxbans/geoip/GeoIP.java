@@ -18,9 +18,11 @@ public class GeoIP implements Comparable<GeoIP> {
         if (o.value > this.value) {
             return -1;
         }
+
         if (o.value < this.value) {
             return 1;
         }
+
         return 0;
     }
     

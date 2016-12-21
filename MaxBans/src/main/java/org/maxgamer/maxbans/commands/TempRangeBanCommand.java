@@ -21,9 +21,11 @@ public class TempRangeBanCommand extends CmdSkeleton {
             sender.sendMessage(this.getUsage());
             return true;
         }
+
         final String banner = Util.getName(sender);
         final boolean silent = Util.isSilent(args);
         String[] ips = args[0].split("-");
+
         if (ips.length == 1 && ips[0].contains("*")) {
             ips = new String[] { ips[0].replace('*', '0'), ips[0].replace("*", "255") };
         }
@@ -31,24 +33,30 @@ public class TempRangeBanCommand extends CmdSkeleton {
             sender.sendMessage(ChatColor.RED + "Not enough IP addresses supplied! Usage: " + this.getUsage());
             return true;
         }
+
         for (String ip : ips) {
             if (!Util.isIP(ip)) {
                 sender.sendMessage(ChatColor.RED + ip + " is not a valid IP address.");
                 return true;
             }
         }
+
         final IPAddress start = new IPAddress(ips[0]);
         final IPAddress end = new IPAddress(ips[1]);
         final long expires = Util.getTime(args) + System.currentTimeMillis();
+
         if (expires <= 0L) {
             sender.sendMessage(this.getUsage());
             return true;
         }
+
         final String reason = Util.buildReason(args);
         final TempRangeBan rb = new TempRangeBan(banner, reason, System.currentTimeMillis(), expires, start, end);
         final RangeBan overlap = this.plugin.getBanManager().ban(rb);
+
         if (overlap == null) {
             this.plugin.getBanManager().announce(Formatter.secondary + banner + Formatter.primary + " banned " + Formatter.secondary + rb.toString() + Formatter.primary + ". Reason: '" + Formatter.secondary + reason + Formatter.primary + "' Remaining: " + Formatter.secondary + Util.getTimeUntil(rb.getExpires()), silent, sender);
+
             for (final Player p : Bukkit.getOnlinePlayers()) {
                 if (rb.contains(new IPAddress(p.getAddress().getAddress().getHostAddress()))) {
                     p.kickPlayer(rb.getKickMessage());
@@ -58,6 +66,7 @@ public class TempRangeBanCommand extends CmdSkeleton {
         else {
             sender.sendMessage(ChatColor.RED + "That RangeBan overlaps an existing one! (" + overlap.toString() + ")");
         }
+
         return true;
     }
 }

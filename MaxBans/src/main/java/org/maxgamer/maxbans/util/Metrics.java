@@ -274,8 +274,7 @@ public class Metrics {
         metrics.task = task;
     }
     
-    public static class Graph
-    {
+    public static class Graph {
         private final String name;
         private final Set<Plotter> plotters;
         
@@ -317,8 +316,7 @@ public class Metrics {
         }
     }
     
-    public abstract static class Plotter
-    {
+    public abstract static class Plotter {
         private final String name;
         
         public Plotter() {

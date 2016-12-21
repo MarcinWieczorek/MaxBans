@@ -22,22 +22,29 @@ public class ServerToClientConnection {
                 try {
                     ServerToClientConnection.access$1(ServerToClientConnection.this, new InputStreamWrapper(ServerToClientConnection.this.socket.getInputStream()));
                     ServerToClientConnection.access$2(ServerToClientConnection.this, new OutputStreamWrapper(ServerToClientConnection.this.socket.getOutputStream()));
+
                     if (SyncUtil.isDebug()) {
                         ServerToClientConnection.log("Waiting for authentication from " + ServerToClientConnection.this);
                     }
+
                     try {
                         Thread.sleep(500L);
                     }
                     catch (InterruptedException ignored) {}
+
                     final ByteArrayOutputStream read = new ByteArrayOutputStream();
                     byte b;
+
                     while (ServerToClientConnection.this.in.available() > 0 && (b = ServerToClientConnection.this.in.readByte()) != 0) {
                         read.write(b);
                     }
+
                     if (SyncUtil.isDebug()) {
                         ServerToClientConnection.log("Read " + read.size() + " bytes of authentication.");
                     }
+
                     String data;
+
                     try {
                         data = new String(read.toByteArray(), "ISO-8859-1");
                     }
@@ -45,9 +52,11 @@ public class ServerToClientConnection {
                         e.printStackTrace();
                         return;
                     }
+
                     try {
                         Packet p = Packet.unserialize(data);
                         if (!p.getCommand().equals("connect") || !ServerToClientConnection.this.server.getPassword().equals(p.get("pass"))) {
+
                             ServerToClientConnection.log(ServerToClientConnection.this + " failed to send correct password! Disconnecting.");
                             ServerToClientConnection.this.close();
                         }
@@ -64,13 +73,17 @@ public class ServerToClientConnection {
                         ServerToClientConnection.this.socket.close();
                         return;
                     }
+
                     ServerToClientConnection.this.server.getConnections().add(ServerToClientConnection.this);
+
                     if (SyncUtil.isDebug()) {
                         ServerToClientConnection.log("Ready for syncing!");
                     }
+
                     while (!ServerToClientConnection.this.socket.isClosed()) {
                         data = ServerToClientConnection.this.in.readString();
                         Packet p;
+
                         try {
                             p = Packet.unserialize(data);
                         }
@@ -79,6 +92,7 @@ public class ServerToClientConnection {
                             ServerToClientConnection.log("Received malformed packet: " + data);
                             continue;
                         }
+
                         if (p.has("broadcast")) {
                             p.remove("broadcast");
                             ServerToClientConnection.this.server.sendAll(p, ServerToClientConnection.this);
@@ -87,17 +101,21 @@ public class ServerToClientConnection {
                 }
                 catch (IOException e3) {
                     ServerToClientConnection.log("Client disconnected.");
+
                     if (SyncUtil.isDebug()) {
                         e3.printStackTrace();
                     }
+
                     try {
                         ServerToClientConnection.this.socket.close();
                     }
                     catch (IOException ignored) {}
                 }
+
                 if (SyncUtil.isDebug()) {
                     ServerToClientConnection.log("Removing connection.");
                 }
+
                 ServerToClientConnection.this.server.getConnections().remove(ServerToClientConnection.this);
             }
         };
@@ -126,6 +144,7 @@ public class ServerToClientConnection {
         if (SyncUtil.isDebug()) {
             log("Writing " + p.serialize());
         }
+
         this.out.write(p.serialize());
     }
     

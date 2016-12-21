@@ -9,9 +9,11 @@ public class IPAddress implements Comparable<IPAddress> {
         super();
         this.bytes = new int[4];
         final String[] t = s.split("\\.");
+
         if (t.length != 4) {
             throw new NumberFormatException("The given IP was invalid! (" + s + ") (Only " + t.length + " byte sets given)");
         }
+
         for (int i = 0; i < 4; ++i) {
             this.bytes[i] = Integer.parseInt(t[i]);
         }
@@ -23,11 +25,13 @@ public class IPAddress implements Comparable<IPAddress> {
     
     public int compareTo(final IPAddress ip) {
         final int[] bytes = ip.getBytes();
+
         for (int i = 0; i < bytes.length; ++i) {
             if (this.bytes[i] != bytes[i]) {
                 if (this.bytes[i] > bytes[i]) {
                     return 1;
                 }
+
                 if (this.bytes[i] < bytes[i]) {
                     return -1;
                 }
@@ -48,18 +52,22 @@ public class IPAddress implements Comparable<IPAddress> {
         if (this == o) {
             return true;
         }
+
         if (o instanceof IPAddress) {
             final IPAddress ip = (IPAddress)o;
             return ip.bytes.equals(this.bytes);
         }
+
         return false;
     }
     
     public String toString() {
         final StringBuilder sb = new StringBuilder(String.valueOf(this.bytes[0]));
+
         for (int i = 1; i < this.bytes.length; ++i) {
             sb.append("." + this.bytes[i]);
         }
+
         return sb.toString();
     }
     

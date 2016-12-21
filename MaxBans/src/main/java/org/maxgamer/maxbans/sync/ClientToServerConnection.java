@@ -42,6 +42,7 @@ public class ClientToServerConnection {
                         }
                         catch (IOException ignored) {}
                     }
+
                     try {
                         ClientToServerConnection.access$4(ClientToServerConnection.this, new Socket(ClientToServerConnection.this.host, ClientToServerConnection.this.port));
                         ClientToServerConnection.access$5(ClientToServerConnection.this, new InputStreamWrapper(ClientToServerConnection.this.socket.getInputStream()));
@@ -49,6 +50,7 @@ public class ClientToServerConnection {
                         Packet p = new Packet("connect").put("pass", ClientToServerConnection.this.pass);
                         ClientToServerConnection.this.write(p);
                         p = Packet.unserialize(ClientToServerConnection.this.in.readString());
+
                         if (!p.getCommand().equals("connect")) {
                             ClientToServerConnection.log("Server rejected connection request! Is the password correct?");
                             ClientToServerConnection.this.close();
@@ -59,33 +61,40 @@ public class ClientToServerConnection {
                         if (SyncUtil.isDebug()) {
                             ClientToServerConnection.log("Connection failed (UnknownHostException), retrying.");
                         }
+
                         try {
                             Thread.sleep(5000L);
                         }
                         catch (InterruptedException ignored) {}
+
                         continue;
                     }
                     catch (IOException e4) {
                         if (SyncUtil.isDebug()) {
                             ClientToServerConnection.log("Connection failed (IOException), retrying.");
                         }
+
                         try {
                             Thread.sleep(5000L);
                         }
                         catch (InterruptedException ignored) {}
+
                         continue;
                     }
                     synchronized (ClientToServerConnection.this.queue) {
                         for (final Packet p2 : ClientToServerConnection.this.queue) {
                             ClientToServerConnection.this.write(p2);
                         }
+
                         ClientToServerConnection.this.queue.clear();
                     }
+
                     // monitorexit(ClientToServerConnection.access$9(this.this$0))
                     try {
                         do {
                             final String data = ClientToServerConnection.this.in.readString();
                             Packet p;
+
                             try {
                                 p = Packet.unserialize(data);
                             }
@@ -94,8 +103,10 @@ public class ClientToServerConnection {
                                 ClientToServerConnection.log("Malformed packet: " + data);
                                 continue;
                             }
+
                             try {
                                 final Command c = ClientToServerConnection.this.commands.get(p.getCommand());
+
                                 if (c == null) {
                                     ClientToServerConnection.log("Unrecognised command: '" + p.getCommand() + "'... Is this version of MaxBans up to date?");
                                 }
@@ -116,14 +127,17 @@ public class ClientToServerConnection {
                         if (SyncUtil.isDebug()) {
                             e2.printStackTrace();
                         }
+
                         ClientToServerConnection.log("Server disconnected.  Reconnecting.");
                     }
                 }
             }
         };
+
         this.host = host;
         this.port = port;
         this.pass = pass;
+
         final Command msg = new Command() {
             public void run(final Packet prop) {
                 final String msg = prop.get("string");
@@ -131,6 +145,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("msg", msg);
+
         final Command announce = new Command() {
             public void run(final Packet prop) {
                 final String msg = prop.get("string");
@@ -139,6 +154,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("announce", announce);
+
         final Command unwarn = new Command() {
             public void run(final Packet prop) {
                 final String name = prop.get("name");
@@ -150,6 +166,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("unwarn", unwarn);
+
         final Command setip = new Command() {
             public void run(final Packet prop) {
                 final String ip = prop.get("ip");
@@ -158,6 +175,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("setip", setip);
+
         final Command setname = new Command() {
             public void run(final Packet prop) {
                 final String actual = prop.get("name");
@@ -165,6 +183,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("setname", setname);
+
         final Command dnsbl = new Command() {
             public void run(final Packet prop) {
                 if (MaxBans.instance.getBanManager().getDNSBL() == null) {
@@ -178,6 +197,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("dnsbl", dnsbl);
+
         final Command ban = new Command() {
             public void run(final Packet props) {
                 final String name = props.get("name");
@@ -187,6 +207,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("ban", ban);
+
         final Command ipban = new Command() {
             public void run(final Packet props) {
                 final String ip = props.get("ip");
@@ -196,6 +217,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("ipban", ipban);
+
         final Command tempipban = new Command() {
             public void run(final Packet props) {
                 final String ip = props.get("ip");
@@ -206,6 +228,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("tempipban", tempipban);
+
         final Command tempban = new Command() {
             public void run(final Packet props) {
                 final String name = props.get("name");
@@ -216,6 +239,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("tempban", tempban);
+
         final Command unban = new Command() {
             public void run(final Packet props) {
                 final String name = props.get("name");
@@ -223,6 +247,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("unban", unban);
+
         final Command unbanip = new Command() {
             public void run(final Packet props) {
                 final String ip = props.get("ip");
@@ -230,6 +255,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("unbanip", unbanip);
+
         final Command mute = new Command() {
             public void run(final Packet props) {
                 final String name = props.get("name");
@@ -239,6 +265,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("mute", mute);
+
         final Command tempmute = new Command() {
             public void run(final Packet props) {
                 final String name = props.get("name");
@@ -249,6 +276,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("tempmute", tempmute);
+
         final Command unmute = new Command() {
             public void run(final Packet props) {
                 final String name = props.get("name");
@@ -256,6 +284,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("unmute", unmute);
+
         final Command warn = new Command() {
             public void run(final Packet props) {
                 final String name = props.get("name");
@@ -265,6 +294,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("warn", warn);
+
         final Command clearwarnings = new Command() {
             public void run(final Packet props) {
                 final String name = props.get("name");
@@ -272,6 +302,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("clearwarnings", clearwarnings);
+
         final Command addhistory = new Command() {
             public void run(final Packet props) {
                 final String message = props.get("string");
@@ -281,6 +312,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("addhistory", addhistory);
+
         final Command rangeban = new Command() {
             public void run(final Packet props) {
                 final String reason = props.get("reason");
@@ -295,6 +327,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("rangeban", rangeban);
+
         final Command unrangeban = new Command() {
             public void run(final Packet props) {
                 final String start = props.get("start");
@@ -306,6 +339,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("unrangeban", unrangeban);
+
         final Command whitelist = new Command() {
             public void run(final Packet props) {
                 final String name = props.get("name");
@@ -314,6 +348,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("whitelist", whitelist);
+
         final Command kick = new Command() {
             public void run(final Packet props) {
                 final String name = props.get("name");
@@ -322,6 +357,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("kick", kick);
+
         final Command kickip = new Command() {
             public void run(final Packet props) {
                 final String ip = props.get("ip");
@@ -330,6 +366,7 @@ public class ClientToServerConnection {
             }
         };
         this.commands.put("kickip", kickip);
+
         final Command setimmunity = new Command() {
             public void run(final Packet props) {
                 final String name = props.get("name");
@@ -344,6 +381,7 @@ public class ClientToServerConnection {
         if (SyncUtil.isDebug()) {
             log("Starting network listener.");
         }
+
         this.watcher.setDaemon(true);
         this.watcher.start();
     }
@@ -352,6 +390,7 @@ public class ClientToServerConnection {
         if (SyncUtil.isDebug()) {
             log("Writing packet: " + p.serialize());
         }
+
         try {
             this.out.write(p.serialize());
         }
@@ -360,6 +399,7 @@ public class ClientToServerConnection {
                 e.printStackTrace();
                 log("Queued data for transmission upon reconnection instead!");
             }
+
             synchronized (this.queue) {
                 this.queue.addLast(p);
             }
@@ -378,6 +418,7 @@ public class ClientToServerConnection {
     public void close() {
         this.setReconnect(false);
         log("Closing connection!");
+
         try {
             this.socket.close();
         }
@@ -400,8 +441,7 @@ public class ClientToServerConnection {
         clientToServerConnection.out = out;
     }
     
-    protected abstract static class Command
-    {
+    protected abstract static class Command {
         public abstract void run(final Packet p0);
     }
 }

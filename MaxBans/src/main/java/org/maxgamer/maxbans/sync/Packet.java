@@ -63,8 +63,10 @@ public class Packet {
     
     public String serialize() {
         final StringBuilder sb = new StringBuilder("@").append(this.getCommand());
+
         for (final Map.Entry<String, String> entry : this.values.entrySet()) {
             sb.append(" -" + entry.getKey());
+
             if (entry.getValue() != null && !entry.getValue().isEmpty()) {
                 sb.append(" ").append(escape(entry.getValue()));
             }
@@ -76,19 +78,24 @@ public class Packet {
         final Packet prop = new Packet();
         final String[] parts = serial.split(" -");
         prop.setCommand(parts[0].substring(1));
+
         for (int i = 1; i < parts.length; ++i) {
             final String part = parts[i];
             final String[] pieces = part.split(" ");
             final String key = pieces[0];
             final StringBuilder value = new StringBuilder();
+
             if (pieces.length > 1) {
                 value.append(pieces[1]);
+
                 for (int j = 2; j < pieces.length; ++j) {
                     value.append(" ").append(pieces[j]);
                 }
             }
+
             prop.put(key, unescape(value.toString()));
         }
+
         return prop;
     }
     
@@ -96,6 +103,7 @@ public class Packet {
         for (int i = 0; i < Packet.escapers.length; ++i) {
             s = s.replace(Packet.escapers[i], Packet.unescapers[i]);
         }
+
         return s;
     }
     
@@ -103,16 +111,19 @@ public class Packet {
         for (int i = 0; i < Packet.escapers.length; ++i) {
             s = s.replace(Packet.unescapers[i], Packet.escapers[i]);
         }
+
         return s;
     }
     
     public boolean equals(final Object o) {
         if (o != null && o instanceof Packet) {
             final Packet p = (Packet)o;
+
             if (p.getProperties().equals(this.getProperties()) && p.getCommand().equals(this.getCommand())) {
                 return true;
             }
         }
+
         return false;
     }
 }

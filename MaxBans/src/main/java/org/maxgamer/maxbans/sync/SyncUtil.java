@@ -22,17 +22,21 @@ public class SyncUtil {
     
     public static String getRandomString(final int len) {
         final StringBuilder sb = new StringBuilder();
+
         for (int i = 0; i < len; ++i) {
             sb.append(SyncUtil.chars[SyncUtil.r.nextInt(SyncUtil.chars.length)]);
         }
+
         return sb.toString();
     }
     
     private static String convertedToHex(final byte[] data) {
         final StringBuffer buf = new StringBuffer();
+
         for (int i = 0; i < data.length; ++i) {
             int halfOfByte = data[i] >>> 4 & 0xF;
             int twoHalfBytes = 0;
+
             do {
                 if (halfOfByte >= 0 && halfOfByte <= 9) {
                     buf.append((char)(48 + halfOfByte));
@@ -40,9 +44,11 @@ public class SyncUtil {
                 else {
                     buf.append((char)(97 + (halfOfByte - 10)));
                 }
+
                 halfOfByte = (data[i] & 0xF);
             } while (twoHalfBytes++ < 1);
         }
+
         return buf.toString();
     }
     

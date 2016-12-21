@@ -23,10 +23,12 @@ public class ChatListener implements Listener {
     public void onPlayerChat(final AsyncPlayerChatEvent event) {
         final Player p = event.getPlayer();
         final Mute mute = this.plugin.getBanManager().getMute(p.getName());
+
         if (mute != null) {
             if (this.plugin.getBanManager().hasImmunity(p.getName())) {
                 return;
             }
+
             if (mute instanceof TempMute) {
                 final TempMute tMute = (TempMute)mute;
                 p.sendMessage(ChatColor.RED + "You're muted for another " + Util.getTimeUntil(tMute.getExpires()));
@@ -34,6 +36,7 @@ public class ChatListener implements Listener {
             else {
                 p.sendMessage(ChatColor.RED + "You're muted!");
             }
+
             event.setCancelled(true);
         }
     }

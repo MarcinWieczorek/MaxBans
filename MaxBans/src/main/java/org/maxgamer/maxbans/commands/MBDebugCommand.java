@@ -25,6 +25,7 @@ public class MBDebugCommand extends CmdSkeleton {
         Label_0184: {
             if (args[0].equalsIgnoreCase("file")) {
                 final File file = new File(this.plugin.getDataFolder(), "debug.txt");
+
                 try {
                     file.createNewFile();
                     final PrintStream ps = new PrintStream(file);
@@ -42,6 +43,7 @@ public class MBDebugCommand extends CmdSkeleton {
                     return true;
                 }
             }
+
             if (args[0].equalsIgnoreCase("console")) {
                 out = new Printable() {
                     final CommandSender sender = Bukkit.getConsoleSender();
@@ -59,6 +61,7 @@ public class MBDebugCommand extends CmdSkeleton {
                     sender.sendMessage("/mbdebug console - Outputs debug info to Console");
                     return true;
                 }
+
                 out = new Printable() {
                     public void print(final String s) {
                         sender.sendMessage(s);
@@ -66,6 +69,7 @@ public class MBDebugCommand extends CmdSkeleton {
                 };
             }
         }
+
         final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         final Date date = new Date();
         System.out.println();
@@ -80,15 +84,19 @@ public class MBDebugCommand extends CmdSkeleton {
         out.print("=== Config File ===");
         final String pass = this.plugin.getConfig().getString("database.pass");
         StringBuilder sb = new StringBuilder();
+
         for (int i = 0; i < pass.length(); ++i) {
             sb.append('*');
         }
+
         this.plugin.getConfig().set("database.pass", sb.toString());
         final String syncpass = this.plugin.getConfig().getString("sync.pass");
         sb = new StringBuilder();
+
         for (int j = 0; j < syncpass.length(); ++j) {
             sb.append('*');
         }
+
         this.plugin.getConfig().set("sync.pass", sb.toString());
         out.print(this.plugin.getConfig().saveToString());
         this.plugin.getConfig().set("database.pass", pass);
@@ -127,21 +135,23 @@ public class MBDebugCommand extends CmdSkeleton {
         out.print(this.plugin.getBanManager().getWhitelist());
         out.print("=== History (Top=Recent) ===");
         out.print(this.plugin.getBanManager().getHistory());
+
         if (this.plugin.getBanManager().getDNSBL() != null) {
             out.print("=== DNSBL Records ===");
             out.print(this.plugin.getBanManager().getDNSBL().getHistory());
             out.print("=== DNSBL Servers ===");
             out.print(this.plugin.getBanManager().getDNSBL().getServers());
         }
+
         return true;
     }
     
-    public abstract class Printable
-    {
+    public abstract class Printable {
         public abstract void print(final String p0);
         
         public void print(final Map<?, ?> map) {
             this.print("Map: " + map.getClass().getCanonicalName() + ", Size: " + map.size());
+
             for (final Map.Entry<?, ?> entry : map.entrySet()) {
                 final String s = String.format("%-16s | %.1000s", String.valueOf(entry.getKey()), String.valueOf(entry.getValue()));
                 this.print(s);
@@ -150,6 +160,7 @@ public class MBDebugCommand extends CmdSkeleton {
         
         public void print(final Collection<?> list) {
             this.print("Collection: " + list.getClass().getCanonicalName() + ", Size: " + list.size());
+
             for (final Object value : list) {
                 this.print(String.valueOf(value));
             }
@@ -157,6 +168,7 @@ public class MBDebugCommand extends CmdSkeleton {
         
         public <T> void print(final T[] array) {
             this.print("List: " + array.getClass().getCanonicalName() + ", Length: " + array.length);
+
             for (final T t : array) {
                 this.print(String.valueOf(t));
             }

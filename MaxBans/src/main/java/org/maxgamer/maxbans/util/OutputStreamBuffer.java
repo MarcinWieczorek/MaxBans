@@ -36,6 +36,7 @@ public class OutputStreamBuffer extends ByteArrayOutputStream {
             final char c = s.charAt(i);
             this.writeChar(c);
         }
+
         this.writeChar('\0');
     }
     

@@ -19,35 +19,46 @@ public class BanCommand extends CmdSkeleton {
             sender.sendMessage(this.getUsage());
             return true;
         }
+
         final boolean silent = Util.isSilent(args);
         String name = args[0];
+
         if (name.isEmpty()) {
             sender.sendMessage(Msg.get("error.no-player-given"));
             return true;
         }
+
         final String reason = Util.buildReason(args);
         final String banner = Util.getName(sender);
         final String message = Msg.get("announcement.player-was-banned", new String[] { "banner", "name", "reason" }, new String[] { banner, name, reason });
+
         if (!Util.isIP(name)) {
             name = this.plugin.getBanManager().match(name);
+
             if (name == null) {
                 name = args[0];
             }
+
             final Ban ban = this.plugin.getBanManager().getBan(name);
+
             if (ban != null && !(ban instanceof TempBan)) {
                 sender.sendMessage(Msg.get("error.player-already-banned"));
                 return true;
             }
+
             this.plugin.getBanManager().ban(name, reason, banner);
         }
         else {
             final IPBan ipban = this.plugin.getBanManager().getIPBan(name);
+
             if (ipban != null && !(ipban instanceof TempIPBan)) {
                 sender.sendMessage(Msg.get("error.ip-already-banned"));
                 return true;
             }
+
             this.plugin.getBanManager().ipban(name, reason, banner);
         }
+
         this.plugin.getBanManager().announce(message, silent, sender);
         this.plugin.getBanManager().addHistory(name, banner, message);
         return true;

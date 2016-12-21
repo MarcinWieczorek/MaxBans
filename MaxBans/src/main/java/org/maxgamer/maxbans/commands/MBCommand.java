@@ -16,8 +16,10 @@ public class MBCommand extends CmdSkeleton {
         final CmdSkeleton[] commands = CmdSkeleton.getCommands();
         Arrays.sort(commands);
         CmdSkeleton[] array;
+
         for (int length = (array = commands).length, i = 0; i < length; ++i) {
             final CmdSkeleton skelly = array[i];
+
             if (skelly.hasPermission(sender)) {
                 sender.sendMessage(String.valueOf(skelly.getUsage()) + " - " + Formatter.primary + skelly.getDescription());
             }

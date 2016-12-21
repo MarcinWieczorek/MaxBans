@@ -5,12 +5,14 @@ public class Syncer {
     
     public Syncer(final String host, final int port, String pass) {
         super();
+
         try {
             pass = SyncUtil.encrypt(pass, "fuQJ7_q#eF78A&D");
         }
         catch (Exception e) {
             throw new RuntimeException("Failed to start Syncer: " + e.getMessage());
         }
+
         this.con = new ClientToServerConnection(host, port, pass);
     }
     

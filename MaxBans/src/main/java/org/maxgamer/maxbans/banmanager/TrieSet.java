@@ -211,8 +211,7 @@ public class TrieSet {
         return !this.top.isWord() && this.top.getChildMap().isEmpty();
     }
     
-    private class Path
-    {
+    private class Path {
         private Path previous;
         private TrieNode node;
         private Character c;
@@ -255,8 +254,7 @@ public class TrieSet {
         }
     }
     
-    private class TrieNode
-    {
+    private class TrieNode {
         private boolean isWord;
         private final Map<Character, TrieNode> children = new HashMap<>(5);
         

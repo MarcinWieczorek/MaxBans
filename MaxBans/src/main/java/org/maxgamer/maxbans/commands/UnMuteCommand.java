@@ -16,17 +16,23 @@ public class UnMuteCommand extends CmdSkeleton {
             sender.sendMessage(this.getUsage());
             return true;
         }
+
         final boolean silent = Util.isSilent(args);
         String name = args[0];
+
         if (name.isEmpty()) {
             sender.sendMessage(Msg.get("error.no-player-given"));
             return true;
         }
+
         name = this.plugin.getBanManager().match(name);
+
         if (name == null) {
             name = args[0];
         }
+
         final Mute mute = this.plugin.getBanManager().getMute(name);
+
         if (mute != null) {
             this.plugin.getBanManager().unmute(name);
             final String banner = Util.getName(sender);
@@ -36,6 +42,7 @@ public class UnMuteCommand extends CmdSkeleton {
         else {
             sender.sendMessage(Msg.get("error.no-mute-found", "name", name));
         }
+
         return true;
     }
 }

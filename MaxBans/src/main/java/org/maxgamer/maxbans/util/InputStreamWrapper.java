@@ -28,9 +28,11 @@ public class InputStreamWrapper extends InputStream {
     public String readString() {
         final ByteArrayOutputStream data = new ByteArrayOutputStream();
         byte b;
+
         while ((b = this.readByte()) != 0) {
             data.write(b);
         }
+
         try {
             return new String(data.toByteArray(), "ISO-8859-1");
         }
@@ -82,9 +84,11 @@ public class InputStreamWrapper extends InputStream {
     public int read() {
         try {
             final int n = this.i.read();
+
             if (n < 0) {
                 throw new RuntimeException("Socket is closed!");
             }
+
             ++this.read;
             return n;
         }

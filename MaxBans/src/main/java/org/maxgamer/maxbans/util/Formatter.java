@@ -24,13 +24,17 @@ public class Formatter {
     
     public static ChatColor getColor(final String s) {
         ChatColor col = ChatColor.getByChar(s);
+
         if (col != null) {
             return col;
         }
+
         col = ChatColor.valueOf(s.toUpperCase());
+
         if (col != null) {
             return col;
         }
+
         return ChatColor.WHITE;
     }
 }

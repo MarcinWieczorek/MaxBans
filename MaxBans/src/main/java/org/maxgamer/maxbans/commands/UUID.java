@@ -20,8 +20,10 @@ public class UUID extends CmdSkeleton {
                 sender.sendMessage(ChatColor.RED + "/UUID <Name>");
                 return true;
             }
+
             String name = args[0];
             name = this.plugin.getBanManager().match(name);
+
             try {
                 @SuppressWarnings("deprecation")
 				final OfflinePlayer p = Bukkit.getOfflinePlayer(name);
@@ -30,6 +32,7 @@ public class UUID extends CmdSkeleton {
             catch (Exception e) {
                 sender.sendMessage(ChatColor.RED + "No player by that name!");
             }
+
             return true;
         }
         catch (Exception e2) {

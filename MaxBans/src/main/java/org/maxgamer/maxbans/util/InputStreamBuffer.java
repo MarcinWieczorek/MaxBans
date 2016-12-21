@@ -38,8 +38,10 @@ public class InputStreamBuffer extends ByteArrayInputStream {
     
     public String readString() {
         final StringBuilder sb = new StringBuilder();
+
         try {
             char c;
+
             while ((c = this.readChar()) != '\0') {
                 sb.append(c);
             }

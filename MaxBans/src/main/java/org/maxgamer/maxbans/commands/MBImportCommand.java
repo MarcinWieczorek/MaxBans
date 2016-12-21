@@ -26,6 +26,7 @@ public class MBImportCommand extends CmdSkeleton {
         }
         else if (args[0].equalsIgnoreCase("dynamicban")) {
             sender.sendMessage(ChatColor.RED + "Importing bans. This may take a while!");
+
             try {
                 final DynamicBanBridge bridge2 = new DynamicBanBridge();
                 bridge2.load();
@@ -38,6 +39,7 @@ public class MBImportCommand extends CmdSkeleton {
         else {
             sender.sendMessage(Formatter.secondary + "Failed.  No known importer: " + args[0]);
         }
+
         return true;
     }
 }

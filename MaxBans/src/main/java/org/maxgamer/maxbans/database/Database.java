@@ -23,6 +23,7 @@ public class Database {
         catch (SQLException e) {
             throw new ConnectionException(e.getMessage());
         }
+
         this.core = core;
     }
     
@@ -41,12 +42,14 @@ public class Database {
     
     public boolean hasTable(final String table) throws SQLException {
         final ResultSet rs = this.getConnection().getMetaData().getTables(null, null, "%", null);
+
         while (rs.next()) {
             if (table.equalsIgnoreCase(rs.getString("TABLE_NAME"))) {
                 rs.close();
                 return true;
             }
         }
+
         rs.close();
         return false;
     }
@@ -59,10 +62,13 @@ public class Database {
         if (!this.hasTable(table)) {
             return false;
         }
+
         final String query = "SELECT * FROM " + table + " LIMIT 0,1";
+
         try {
             final PreparedStatement ps = this.getConnection().prepareStatement(query);
             final ResultSet rs = ps.executeQuery();
+
             if (rs.next()) {
                 rs.getString(column);
                 return true;
@@ -71,52 +77,64 @@ public class Database {
         catch (SQLException e) {
             return false;
         }
+
         return false;
     }
     
     public void copyTo(final Database db) throws SQLException {
         ResultSet rs = this.getConnection().getMetaData().getTables(null, null, "%", null);
         final List<String> tables = new LinkedList<>();
+
         while (rs.next()) {
             tables.add(rs.getString("TABLE_NAME"));
         }
+
         rs.close();
         this.core.flush();
+
         for (final String table : tables) {
             if (table.toLowerCase().startsWith("sqlite_autoindex_")) {
                 continue;
             }
+
             System.out.println("Copying " + table);
             db.getConnection().prepareStatement("DELETE FROM " + table).execute();
             rs = this.getConnection().prepareStatement("SELECT * FROM " + table).executeQuery();
             int n = 0;
             String query = "INSERT INTO " + table + " VALUES (";
             query = String.valueOf(query) + "?";
+
             for (int i = 2; i <= rs.getMetaData().getColumnCount(); ++i) {
                 query = String.valueOf(query) + ", ?";
             }
+
             query = String.valueOf(query) + ")";
             final PreparedStatement ps = db.getConnection().prepareStatement(query);
+
             while (rs.next()) {
                 ++n;
+
                 for (int j = 1; j <= rs.getMetaData().getColumnCount(); ++j) {
                     ps.setObject(j, rs.getObject(j));
                 }
+
                 ps.addBatch();
+
                 if (n % 100 == 0) {
                     ps.executeBatch();
                     System.out.println(String.valueOf(n) + " records copied...");
                 }
             }
+
             ps.executeBatch();
             rs.close();
         }
+
         db.getConnection().close();
         this.getConnection().close();
     }
     
-    public static class ConnectionException extends Exception
-    {
+    public static class ConnectionException extends Exception {
         private static final long serialVersionUID = 8348749992936357317L;
         
         public ConnectionException(final String msg) {

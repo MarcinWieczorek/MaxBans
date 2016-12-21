@@ -27,19 +27,23 @@ public class MySQLCore implements DatabaseCore {
         this.info.put("useUnicode", "true");
         this.info.put("characterEncoding", "utf8");
         this.url = ("jdbc:mysql://" + host + ":" + port + "/" + database);
+
         for (int i = 0; i < 8; i++) {
-          pool.add(null);
+            pool.add(null);
         }
     }
     
     public Connection getConnection() {
         int i = 0;
+
         while (i < 8) {
             Connection connection = MySQLCore.pool.get(i);
+
             try {
                 if (connection != null && !connection.isClosed() && connection.isValid(10)) {
                     return connection;
                 }
+
                 connection = DriverManager.getConnection(this.url, this.info);
                 MySQLCore.pool.set(i, connection);
                 return connection;
@@ -49,19 +53,23 @@ public class MySQLCore implements DatabaseCore {
                 ++i;
             }
         }
+
         return null;
     }
     
     public void queue(final BufferStatement bs) {
         try {
             final Connection con = this.getConnection();
+
             while (con == null) {
                 try {
                     Thread.sleep(15L);
                 }
                 catch (InterruptedException ignored) {}
+
                 this.getConnection();
             }
+
             final PreparedStatement ps = bs.prepareStatement(con);
             ps.execute();
             ps.close();
@@ -72,8 +80,10 @@ public class MySQLCore implements DatabaseCore {
     }
     
     public void close() {
+
     }
     
     public void flush() {
+
     }
 }

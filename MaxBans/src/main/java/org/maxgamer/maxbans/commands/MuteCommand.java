@@ -17,21 +17,28 @@ public class MuteCommand extends CmdSkeleton {
             sender.sendMessage(this.getUsage());
             return true;
         }
+
         final boolean silent = Util.isSilent(args);
         String name = args[0];
+
         if (name.isEmpty()) {
             sender.sendMessage(Msg.get("error.no-player-given"));
             return true;
         }
+
         name = this.plugin.getBanManager().match(name);
+
         if (name == null) {
             name = args[0];
         }
+
         final Mute mute = this.plugin.getBanManager().getMute(name);
+
         if (mute != null) {
             Bukkit.dispatchCommand(sender, "unmute");
             return true;
         }
+
         final String reason = Util.buildReason(args);
         final String banner = Util.getName(sender);
         this.plugin.getBanManager().mute(name, banner, reason);

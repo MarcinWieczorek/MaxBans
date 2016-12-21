@@ -37,12 +37,14 @@ public class MBExportCommand extends CmdSkeleton {
                     sender.sendMessage(ChatColor.RED + "Database is already MySQL");
                     return true;
                 }
+
                 final ConfigurationSection cfg = this.plugin.getConfig().getConfigurationSection("database");
                 final String host = cfg.getString("host");
                 final String port = cfg.getString("port");
                 final String user = cfg.getString("user");
                 final String pass = cfg.getString("pass");
                 final String name = cfg.getString("name");
+
                 try {
                     final DatabaseCore dbCore = new MySQLCore(host, user, pass, name, port);
                     final Database mysql = new Database(dbCore);
@@ -62,12 +64,15 @@ public class MBExportCommand extends CmdSkeleton {
                     return true;
                 }
             }
+
             if (args[0].equalsIgnoreCase("sqlite") || args[0].equalsIgnoreCase("sql") || args[0].equalsIgnoreCase("flatfile")) {
                 if (this.plugin.getDB().getCore() instanceof SQLiteCore) {
                     sender.sendMessage(ChatColor.RED + "Database is already SQLite");
                     return true;
                 }
+
                 final File file = new File(this.plugin.getDataFolder(), "bans.db");
+
                 try {
                     final DatabaseCore dbCore2 = new SQLiteCore(file);
                     final Database sqlite = new Database(dbCore2);
@@ -87,8 +92,10 @@ public class MBExportCommand extends CmdSkeleton {
                     return true;
                 }
             }
+
             sender.sendMessage(Formatter.secondary + "Failed.  No known exporter: " + args[0]);
         }
+
         return true;
     }
 }

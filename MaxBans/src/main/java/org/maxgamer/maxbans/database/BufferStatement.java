@@ -19,9 +19,11 @@ public class BufferStatement {
     
     public PreparedStatement prepareStatement(final Connection con) throws SQLException {
         final PreparedStatement ps = con.prepareStatement(this.query);
+
         for (int i = 1; i <= this.values.length; ++i) {
             ps.setObject(i, String.valueOf(this.values[i - 1]));
         }
+
         return ps;
     }
     

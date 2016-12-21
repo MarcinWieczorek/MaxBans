@@ -29,16 +29,21 @@ public class LockdownCommand extends CmdSkeleton {
             catch (ParseException e) {
                 on = !this.plugin.getBanManager().isLockdown();
             }
+
             final StringBuilder sb = new StringBuilder();
+
             for (final String s : args) {
                 if (!s.isEmpty()) {
                     sb.append(String.valueOf(s) + " ");
                 }
             }
+
             if (sb.length() > 0) {
                 sb.deleteCharAt(sb.length() - 1);
             }
+
             reason = sb.toString();
+
             if (reason.isEmpty()) {
                 reason = LockdownCommand.defaultReason;
             }
@@ -47,6 +52,7 @@ public class LockdownCommand extends CmdSkeleton {
             on = !this.plugin.getBanManager().isLockdown();
             reason = LockdownCommand.defaultReason;
         }
+
         this.plugin.getBanManager().setLockdown(on, reason);
         sender.sendMessage(Formatter.secondary + "Lockdown is now " + (on ? ("enabled. Reason: " + Formatter.primary + this.plugin.getBanManager().getLockdownReason() + Formatter.secondary) : "disabled") + ".");
         final String banner = Util.getName(sender);

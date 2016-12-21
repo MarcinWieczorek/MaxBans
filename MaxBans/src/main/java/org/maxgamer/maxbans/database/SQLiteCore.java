@@ -29,6 +29,7 @@ public class SQLiteCore implements DatabaseCore {
         catch (SQLException e) {
             e.printStackTrace();
         }
+
         if (this.dbFile.exists()) {
             try {
                 Class.forName("org.sqlite.JDBC");
@@ -39,6 +40,7 @@ public class SQLiteCore implements DatabaseCore {
                 return null;
             }
         }
+
         try {
             this.dbFile.createNewFile();
             return this.getConnection();
@@ -53,6 +55,7 @@ public class SQLiteCore implements DatabaseCore {
         synchronized (this.queue) {
             this.queue.add(bs);
         }
+
         // monitorexit(this.queue)
         if (this.watcher == null || !this.watcher.isAlive()) {
             this.startWatcher();
@@ -62,10 +65,12 @@ public class SQLiteCore implements DatabaseCore {
     public void flush() {
         while (!this.queue.isEmpty()) {
             final BufferStatement bs;
+
             synchronized (this.queue) {
                 bs = this.queue.removeFirst();
             }
             // monitorexit(this.queue)
+
             try {
                 final PreparedStatement ps = bs.prepareStatement(this.getConnection());
                 ps.execute();

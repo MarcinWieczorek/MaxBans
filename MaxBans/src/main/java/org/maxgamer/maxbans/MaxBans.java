@@ -76,30 +76,38 @@ public class MaxBans extends JavaPlugin {
     
     public void onEnable() {
         MaxBans.instance = this;
+
         if (!this.getDataFolder().exists()) {
             this.getDataFolder().mkdir();
         }
+
         final File configFile = new File(this.getDataFolder(), "config.yml");
+
         if (!configFile.exists()) {
             this.saveResource("config.yml", false);
         }
+
         this.reloadConfig();
         Msg.reload();
         this.getConfig().options().copyDefaults();
         final File geoCSV = new File(this.getDataFolder(), "geoip.csv");
+
         if (!geoCSV.exists()) {
             final Runnable download = new Runnable() {
                 public void run() {
                     final String url = "http://maxgamer.org/plugins/maxbans/geoip.csv";
                     MaxBans.this.getLogger().info("Downloading geoIPDatabase...");
+
                     try {
                         final FileOutputStream out = new FileOutputStream(geoCSV);
                         final BufferedInputStream in = new BufferedInputStream(new URL(url).openStream());
                         final byte[] data = new byte[1024];
                         int count;
+
                         while ((count = in.read(data, 0, 1024)) != -1) {
                             out.write(data, 0, count);
                         }
+
                         MaxBans.this.getLogger().info("Download complete.");
                         out.close();
                         in.close();
@@ -116,10 +124,12 @@ public class MaxBans extends JavaPlugin {
         else {
             this.geoIPDB = new GeoIPDatabase(geoCSV);
         }
+
         this.filter_names = this.getConfig().getBoolean("filter-names");
         Formatter.load(this);
         final ConfigurationSection dbConfig = this.getConfig().getConfigurationSection("database");
         DatabaseCore dbCore;
+
         if (this.getConfig().getBoolean("database.mysql", false)) {
             this.getLogger().info("Using MySQL");
             final String user = dbConfig.getString("user");
@@ -133,13 +143,16 @@ public class MaxBans extends JavaPlugin {
             this.getLogger().info("Using SQLite");
             dbCore = new SQLiteCore(new File(this.getDataFolder(), "bans.db"));
         }
+
         final boolean readOnly = dbConfig.getBoolean("read-only", false);
+
         try {
             this.db = new Database(dbCore) {
                 public void execute(final String query, final Object... objs) {
                     if (readOnly) {
                         return;
                     }
+
                     super.execute(query, objs);
                 }
             };
@@ -150,12 +163,15 @@ public class MaxBans extends JavaPlugin {
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
+
         final ConfigurationSection syncConfig = this.getConfig().getConfigurationSection("sync");
+
         if (syncConfig.getBoolean("use", false)) {
             this.getLogger().info("Using Sync.");
             final String host = syncConfig.getString("host");
             final int port2 = syncConfig.getInt("port");
             final String pass2 = syncConfig.getString("pass");
+
             if (syncConfig.getBoolean("server", false)) {
                 try {
                     (this.syncServer = new SyncServer(port2, pass2)).start();
@@ -165,14 +181,17 @@ public class MaxBans extends JavaPlugin {
                     this.getLogger().info("Could not start sync server!");
                 }
             }
+
             (this.syncer = new Syncer(host, port2, pass2)).start();
             this.banManager = new SyncBanManager(this);
         }
         else {
             this.banManager = new BanManager(this);
         }
+
         this.registerCommands();
         Bukkit.getServer().getPluginManager().registerEvents(new ToggleChat(), this);
+
         if (Bukkit.getPluginManager().getPlugin("Herochat") != null) {
             this.getLogger().info("Found Herochat... Hooking!");
             this.herochatListener = new HeroChatListener(this);
@@ -182,11 +201,13 @@ public class MaxBans extends JavaPlugin {
             this.chatListener = new ChatListener(this);
             Bukkit.getServer().getPluginManager().registerEvents(this.chatListener, this);
         }
+
         this.joinListener = new JoinListener();
         this.chatCommandListener = new ChatCommandListener();
         Bukkit.getServer().getPluginManager().registerEvents(this.joinListener, this);
         Bukkit.getServer().getPluginManager().registerEvents(this.chatCommandListener, this);
         this.startMetrics();
+
         if (this.isBungee()) {
             Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeListener());
             Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
@@ -199,14 +220,17 @@ public class MaxBans extends JavaPlugin {
     
     public void onDisable() {
         this.getLogger().info("Disabling Maxbans...");
+
         if (this.syncer != null) {
             this.syncer.stop();
             this.syncer = null;
         }
+
         if (this.syncServer != null) {
             this.syncServer.stop();
             this.syncServer = null;
         }
+
         this.getLogger().info("Clearing buffer...");
         this.db.close();
         this.getLogger().info("Cleared buffer...");
@@ -258,10 +282,13 @@ public class MaxBans extends JavaPlugin {
             if (this.metrics != null) {
                 return;
             }
+
             this.metrics = new Metrics(this);
+
             if (!this.metrics.start()) {
                 return;
             }
+
             final Metrics.Graph bans = this.metrics.createGraph("Bans");
             final Metrics.Graph ipbans = this.metrics.createGraph("IP Bans");
             final Metrics.Graph mutes = this.metrics.createGraph("Mutes");

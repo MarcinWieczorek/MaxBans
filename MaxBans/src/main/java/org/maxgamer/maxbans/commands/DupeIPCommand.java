@@ -34,12 +34,16 @@ public class DupeIPCommand extends CmdSkeleton {
         if (args.length > 0) {
             String name = args[0];
             String ip;
+
             if (!Util.isIP(name)) {
                 name = this.plugin.getBanManager().match(name);
+
                 if (name == null) {
                     name = args[0];
                 }
+
                 ip = this.plugin.getBanManager().getIP(name);
+
                 if (ip == null) {
                     sender.sendMessage(Formatter.primary + "Player " + Formatter.secondary + name + Formatter.primary + " has no IP history.");
                     return true;
@@ -51,6 +55,7 @@ public class DupeIPCommand extends CmdSkeleton {
             try {
                 @SuppressWarnings("deprecation")
 				final OfflinePlayer pl = Bukkit.getOfflinePlayer(name);
+
                 if (sender instanceof Player) {
                     final Player p = (Player)sender;
                     final String[] str = getScanningString(name, ip).split("\\|");
@@ -66,16 +71,20 @@ public class DupeIPCommand extends CmdSkeleton {
             catch (NullPointerException e1) {
                 sender.sendMessage("Player has never played!");
             }
+
             final StringBuilder sb = new StringBuilder();
             final Set<String> dupes = this.plugin.getBanManager().getUsers(ip);
+
             if (dupes != null) {
                 for (final String dupe : dupes) {
                     if (dupe.equalsIgnoreCase(name)) {
                         continue;
                     }
+
                     sb.append(String.valueOf(getChatColor(dupe).toString()) + dupe + ", ");
                 }
             }
+
             if (sb.length() > 0) {
                 sb.replace(sb.length() - 2, sb.length(), "");
                 sender.sendMessage(sb.toString());
@@ -83,8 +92,10 @@ public class DupeIPCommand extends CmdSkeleton {
             else {
                 sender.sendMessage(Formatter.primary + "No duplicates!");
             }
+
             return true;
         }
+
         sender.sendMessage(this.getUsage());
         return true;
     }
@@ -98,15 +109,18 @@ public class DupeIPCommand extends CmdSkeleton {
             if (MaxBans.instance.getBanManager().getIPBan(name) != null) {
                 return DupeIPCommand.banned;
             }
+
             return DupeIPCommand.offline;
         }
         else {
             if (MaxBans.instance.getBanManager().getBan(name) != null) {
                 return DupeIPCommand.banned;
             }
+
             if (Bukkit.getPlayerExact(name) != null) {
                 return DupeIPCommand.online;
             }
+
             return DupeIPCommand.offline;
         }
     }

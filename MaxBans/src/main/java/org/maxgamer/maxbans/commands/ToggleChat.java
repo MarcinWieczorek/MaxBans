@@ -28,6 +28,7 @@ public class ToggleChat extends CmdSkeleton implements Listener {
     public boolean run(final CommandSender sender, final Command cmd, final String label, final String[] args) {
         if (sender instanceof Player) {
             final Player p = (Player)sender;
+
             if (ToggleChat.disable.contains(p.getName())) {
                 ToggleChat.disable.remove(p.getName());
                 p.sendMessage(ChatColor.RED + "Player chat is now unmuted!");
@@ -37,17 +38,20 @@ public class ToggleChat extends CmdSkeleton implements Listener {
                 p.sendMessage(ChatColor.GREEN + "All player chat has now been muted!");
             }
         }
+
         return true;
     }
     
     @EventHandler(priority = EventPriority.MONITOR)
     public void onAsyncChat(final AsyncPlayerChatEvent e) {
         final List<Player> rem = new ArrayList<>();
+
         for (final Player p : e.getRecipients()) {
             if (ToggleChat.disable.contains(p.getName())) {
                 rem.add(p);
             }
         }
+
         for (final Player p : rem) {
             e.getRecipients().remove(p);
         }

@@ -24,10 +24,12 @@ public class HeroChatListener implements Listener {
     public void onHeroChat(final ChannelChatEvent e) {
         final Player p = e.getSender().getPlayer();
         final Mute mute = this.plugin.getBanManager().getMute(p.getName());
+
         if (mute != null) {
             if (this.plugin.getBanManager().hasImmunity(p.getName())) {
                 return;
             }
+
             if (mute instanceof TempMute) {
                 final TempMute tMute = (TempMute)mute;
                 p.sendMessage(ChatColor.RED + "You're muted for another " + Util.getTimeUntil(tMute.getExpires()));
@@ -35,6 +37,7 @@ public class HeroChatListener implements Listener {
             else {
                 p.sendMessage(ChatColor.RED + "You're muted!");
             }
+
             e.setResult(Chatter.Result.FAIL);
         }
     }

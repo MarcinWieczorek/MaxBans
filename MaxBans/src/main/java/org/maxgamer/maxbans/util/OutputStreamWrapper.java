@@ -37,6 +37,7 @@ public class OutputStreamWrapper extends OutputStream {
     
     public void write(final String s) {
         byte[] data;
+
         try {
             data = s.getBytes("ISO-8859-1");
         }
@@ -44,11 +45,14 @@ public class OutputStreamWrapper extends OutputStream {
             e.printStackTrace();
             data = new byte[0];
         }
+
         byte[] array;
+
         for (int length = (array = data).length, i = 0; i < length; ++i) {
             final byte b = array[i];
             this.write(b);
         }
+
         this.write(0);
     }
     

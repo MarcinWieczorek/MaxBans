@@ -20,6 +20,7 @@ public class ImmuneCommand extends CmdSkeleton {
         }
         if (sender instanceof Player) {
             final Player p = (Player)sender;
+
             if (!p.hasPermission("MaxBans.immune") && !p.isOp() && !p.hasPermission("MaxBans.*")) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use that command!");
                 return true;
@@ -28,6 +29,7 @@ public class ImmuneCommand extends CmdSkeleton {
         try {
             final boolean immune = Util.parseBoolean(args[1]);
             final String user = MaxBans.instance.getBanManager().match(args[0]);
+
             if (this.plugin.getBanManager().setImmunity(user, immune)) {
                 sender.sendMessage(ChatColor.GREEN + "Success!");
             }
@@ -38,6 +40,7 @@ public class ImmuneCommand extends CmdSkeleton {
         catch (ParseException e) {
             sender.sendMessage(ChatColor.RED + "Unrecognised state " + args[1]);
         }
+
         return true;
     }
 }

@@ -36,23 +36,28 @@ public class SyncServer {
                         final Socket s = SyncServer.this.core.accept();
                         final String ip = s.getInetAddress().getHostAddress();
                         Integer i = SyncServer.this.blacklist.get(ip);
+
                         if (i == null) {
                             i = 1;
                         }
                         else {
                             ++i;
                         }
+
                         SyncServer.this.blacklist.put(ip, i);
+
                         if (i >= 10) {
                             if (SyncUtil.isDebug()) {
                                 SyncServer.log("Connection from " + ip + " denied - Too many failed authentication attempts (" + i + ").");
                             }
+
                             s.close();
                         }
                         else {
                             if (SyncUtil.isDebug()) {
                                 SyncServer.log("Connection request from " + s.getInetAddress().getHostAddress());
                             }
+
                             final ServerToClientConnection con = new ServerToClientConnection(SyncServer.this, s);
                             con.start();
                         }
@@ -63,7 +68,9 @@ public class SyncServer {
                 }
             }
         };
+
         this.port = port;
+
         try {
             this.pass = SyncUtil.encrypt(pass, "fuQJ7_q#eF78A&D");
         }
@@ -76,9 +83,11 @@ public class SyncServer {
         if (SyncUtil.isDebug()) {
             log("Starting server.");
         }
+
         this.core = new ServerSocket(this.port);
         this.watcher.setDaemon(true);
         this.watcher.start();
+
         if (SyncUtil.isDebug()) {
             log("Server started successfully.");
         }
@@ -93,11 +102,14 @@ public class SyncServer {
     
     public void sendAll(final Packet p, final ServerToClientConnection except) {
         final Iterator<ServerToClientConnection> sit = this.connections.iterator();
+
         while (sit.hasNext()) {
             final ServerToClientConnection con = sit.next();
+
             if (con == except) {
                 continue;
             }
+
             if (!con.isOpen()) {
                 sit.remove();
             }
@@ -109,9 +121,11 @@ public class SyncServer {
                     if (SyncUtil.isDebug()) {
                         e.printStackTrace();
                     }
+
                     if (SyncUtil.isDebug()) {
                         log("Failed to send data to client.");
                     }
+
                     con.close();
                     sit.remove();
                 }

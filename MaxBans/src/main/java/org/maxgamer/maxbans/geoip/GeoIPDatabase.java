@@ -24,7 +24,9 @@ public class GeoIPDatabase {
             System.out.println("WARNING: Could not load GeoIPDatabase. The file does not exist.");
             return;
         }
+
         Scanner sc;
+
         try {
             sc = new Scanner(this.file);
         }
@@ -32,29 +34,38 @@ public class GeoIPDatabase {
             e.printStackTrace();
             return;
         }
+
         final Pattern pattern = Pattern.compile("(\"[^\"]*\")|([^\\,]+)");
         int line = 0;
+
         while (sc.hasNextLine()) {
             ++line;
             try {
                 final String s = sc.nextLine();
                 final Matcher matcher = pattern.matcher(s);
                 final List<String> strs = new LinkedList<>();
+
                 while (matcher.find()) {
                     strs.add(matcher.group());
                 }
+
                 final String[] p = strs.toArray(new String[strs.size()]);
+
                 for (int i = 0; i < p.length; ++i) {
                     int start = 0;
                     int end = p[i].length();
+
                     if (p[i].endsWith("\"")) {
                         --end;
                     }
+
                     if (p[i].startsWith("\"")) {
                         ++start;
                     }
+
                     p[i] = p[i].substring(start, end);
                 }
+
                 final GeoIP ip = new GeoIP(Long.parseLong(p[0]), p[1]);
                 this.info.add(ip);
             }
@@ -63,6 +74,7 @@ public class GeoIPDatabase {
                 e2.printStackTrace();
             }
         }
+
         sc.close();
     }
     
@@ -77,9 +89,11 @@ public class GeoIPDatabase {
         final long value = this.getCode(data);
         final GeoIP dummy = new GeoIP(value, "dummy");
         final GeoIP result = this.info.floor(dummy);
+
         if (result == null) {
             return "NULL";
         }
+
         return result.getCountry();
     }
     

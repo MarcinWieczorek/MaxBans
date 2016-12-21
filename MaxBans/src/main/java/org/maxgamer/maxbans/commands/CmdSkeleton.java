@@ -47,9 +47,11 @@ public abstract class CmdSkeleton implements CommandExecutor, TabCompleter, Comp
         this.namePos = 1;
         this.perm = perm;
         this.cmd = this.plugin.getCommand(command);
+
         if (this.cmd != null) {
             this.cmd.setExecutor(this);
         }
+
         CmdSkeleton.commands.add(this);
     }
     
@@ -70,10 +72,12 @@ public abstract class CmdSkeleton implements CommandExecutor, TabCompleter, Comp
             sender.sendMessage(Msg.get("error.no-permission"));
             return true;
         }
+
         if (this.minArgs > 0 && args.length < this.minArgs && this.getUsage() != null) {
             sender.sendMessage(this.getUsage());
             return true;
         }
+
         try {
             return this.run(sender, cmd, label, args);
         }
@@ -81,9 +85,11 @@ public abstract class CmdSkeleton implements CommandExecutor, TabCompleter, Comp
             e.printStackTrace();
             sender.sendMessage(ChatColor.RED + "Something went wrong when executing the command: ");
             final StringBuilder sb = new StringBuilder(args[0]);
+
             for (int i = 1; i < args.length; ++i) {
                 sb.append(" " + args[i]);
             }
+
             sender.sendMessage(ChatColor.RED + "/" + label + " " + sb.toString());
             sender.sendMessage(ChatColor.RED + "Exception: " + e.getClass().getSimpleName() + ": " + e.getMessage());
             sender.sendMessage(ChatColor.RED + "The remainder of the exception is in the console.");
@@ -94,24 +100,32 @@ public abstract class CmdSkeleton implements CommandExecutor, TabCompleter, Comp
     
     public List<String> onTabComplete(final CommandSender sender, final Command cmd, final String label, final String[] args) {
         final List<String> results = new ArrayList<>();
+
         if (args.length == this.namePos) {
             final String partial = args[this.namePos - 1];
             final String bestMatch = this.plugin.getBanManager().match(partial);
+
             if (bestMatch == null) {
                 return results;
             }
+
             results.add(bestMatch);
+
             for (final Player p : Bukkit.getOnlinePlayers()) {
                 final String name = p.getName();
+
                 if (name.equalsIgnoreCase(bestMatch)) {
                     continue;
                 }
+
                 if (!name.startsWith(partial)) {
                     continue;
                 }
+
                 results.add(name);
             }
         }
+
         return results;
     }
     
