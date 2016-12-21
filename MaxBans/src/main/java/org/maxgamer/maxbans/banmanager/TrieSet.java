@@ -9,8 +9,7 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class TrieSet
-{
+public class TrieSet {
     private TrieNode top;
     
     public TrieSet() {

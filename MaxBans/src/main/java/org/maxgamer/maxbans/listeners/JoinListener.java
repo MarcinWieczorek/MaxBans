@@ -24,8 +24,7 @@ import org.bukkit.Bukkit;
 import org.maxgamer.maxbans.commands.DupeIPCommand;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-public class JoinListener extends ListenerSkeleton
-{
+public class JoinListener extends ListenerSkeleton {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onJoinDupeip(final PlayerLoginEvent e) {
         if (!this.getPlugin().getConfig().getBoolean("auto-dupeip") || e.getResult() != PlayerLoginEvent.Result.ALLOWED) {

@@ -10,8 +10,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class SyncServer
-{
+public class SyncServer {
     public final int MAX_FAILED_AUTH_ATTEMPTS = 10;
     private final int port;
     private String pass;

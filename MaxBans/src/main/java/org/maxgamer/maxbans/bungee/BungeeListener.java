@@ -13,8 +13,7 @@ import org.bukkit.entity.Player;
 import org.maxgamer.maxbans.MaxBans;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
-public class BungeeListener implements PluginMessageListener
-{
+public class BungeeListener implements PluginMessageListener {
     private final MaxBans plugin = MaxBans.instance;
     
     public BungeeListener() {

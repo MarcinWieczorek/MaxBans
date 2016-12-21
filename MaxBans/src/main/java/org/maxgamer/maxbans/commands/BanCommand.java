@@ -9,8 +9,7 @@ import org.maxgamer.maxbans.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class BanCommand extends CmdSkeleton
-{
+public class BanCommand extends CmdSkeleton {
     public BanCommand() {
         super("ban", "maxbans.ban");
     }

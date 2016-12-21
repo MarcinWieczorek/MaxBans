@@ -18,8 +18,7 @@ import org.maxgamer.maxbans.MaxBans;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DNSBL
-{
+public class DNSBL {
     private final Map<String, CacheRecord> history = new HashMap<>();
     private MaxBans plugin;
     private static long cache_timeout;

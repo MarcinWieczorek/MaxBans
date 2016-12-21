@@ -10,8 +10,7 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.maxgamer.maxbans.util.Util;
 
-public class DatabaseHelper
-{
+public class DatabaseHelper {
     public static void setup(final Database db) throws SQLException {
         createTables(db);
     }

@@ -5,8 +5,7 @@ import org.maxgamer.maxbans.util.Util;
 import org.maxgamer.maxbans.MaxBans;
 import org.maxgamer.maxbans.util.IPAddress;
 
-public class TempRangeBan extends RangeBan implements Temporary
-{
+public class TempRangeBan extends RangeBan implements Temporary {
     private final long expires;
     
     public TempRangeBan(final String banner, final String reason, final long created, final long expires, final IPAddress start, final IPAddress end) {

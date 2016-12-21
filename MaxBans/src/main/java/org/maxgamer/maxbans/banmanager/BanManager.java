@@ -31,8 +31,7 @@ import org.maxgamer.maxbans.util.DNSBL;
 import org.maxgamer.maxbans.util.Formatter;
 import org.maxgamer.maxbans.util.IPAddress;
 
-public class BanManager
-{
+public class BanManager {
     protected final MaxBans plugin;
     private final Map<String, Ban> bans = new HashMap<>();
     private final Map<String, TempBan> tempbans = new HashMap<>();

@@ -7,8 +7,7 @@ import org.bukkit.entity.Player;
 import org.maxgamer.maxbans.Msg;
 import org.maxgamer.maxbans.util.Util;
 
-public class KickCommand extends CmdSkeleton
-{
+public class KickCommand extends CmdSkeleton {
     public KickCommand() {
         super("kick", "maxbans.kick");
     }

@@ -12,8 +12,7 @@ import com.dthielke.herochat.ChannelChatEvent;
 import org.maxgamer.maxbans.MaxBans;
 import org.bukkit.event.Listener;
 
-public class HeroChatListener implements Listener
-{
+public class HeroChatListener implements Listener {
     private final MaxBans plugin;
     
     public HeroChatListener(final MaxBans plugin) {

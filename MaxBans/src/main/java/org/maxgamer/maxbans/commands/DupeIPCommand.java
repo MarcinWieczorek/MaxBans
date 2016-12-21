@@ -15,8 +15,7 @@ import org.maxgamer.maxbans.MaxBans;
 import org.maxgamer.maxbans.util.Formatter;
 import org.maxgamer.maxbans.util.Util;
 
-public class DupeIPCommand extends CmdSkeleton
-{
+public class DupeIPCommand extends CmdSkeleton {
     private static ChatColor banned;
     private static ChatColor online;
     private static ChatColor offline;

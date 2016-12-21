@@ -8,8 +8,7 @@ import org.maxgamer.maxbans.util.OutputStreamWrapper;
 import org.maxgamer.maxbans.util.InputStreamWrapper;
 import java.net.Socket;
 
-public class ServerToClientConnection
-{
+public class ServerToClientConnection {
     private Socket socket;
     private SyncServer server;
     private InputStreamWrapper in;

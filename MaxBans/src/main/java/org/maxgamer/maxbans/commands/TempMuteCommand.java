@@ -7,8 +7,7 @@ import org.maxgamer.maxbans.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class TempMuteCommand extends CmdSkeleton
-{
+public class TempMuteCommand extends CmdSkeleton {
     public TempMuteCommand() {
         super("tempmute", "maxbans.tempmute");
     }

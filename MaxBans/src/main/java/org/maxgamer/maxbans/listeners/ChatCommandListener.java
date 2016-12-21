@@ -9,8 +9,7 @@ import org.bukkit.ChatColor;
 import org.maxgamer.maxbans.banmanager.TempMute;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-public class ChatCommandListener extends ListenerSkeleton
-{
+public class ChatCommandListener extends ListenerSkeleton {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onCommand(final PlayerCommandPreprocessEvent e) {
         if (e.isCancelled()) {

@@ -4,8 +4,7 @@ import java.sql.SQLException;
 import org.maxgamer.maxbans.MaxBans;
 import org.maxgamer.maxbans.database.Database;
 
-public class MySQLBridge implements Bridge
-{
+public class MySQLBridge implements Bridge {
     private final Database db;
     
     public MySQLBridge(final Database db) {

@@ -23,8 +23,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.util.Set;
 import org.bukkit.plugin.Plugin;
 
-public class Metrics
-{
+public class Metrics {
     /*private static final int REVISION = 6;
     private static final String BASE_URL = "http://mcstats.org";
     private static final String REPORT_URL = "/report/%s";

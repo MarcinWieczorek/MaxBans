@@ -55,8 +55,7 @@ import org.maxgamer.maxbans.sync.Syncer;
 import org.maxgamer.maxbans.banmanager.BanManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class MaxBans extends JavaPlugin
-{
+public class MaxBans extends JavaPlugin {
     public static final String BUNGEE_CHANNEL = "BungeeCord";
     private BanManager banManager;
     private Syncer syncer;

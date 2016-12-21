@@ -6,8 +6,7 @@ import java.security.MessageDigest;
 import org.maxgamer.maxbans.MaxBans;
 import java.util.Random;
 
-public class SyncUtil
-{
+public class SyncUtil {
     public static final String PASSWORD_SALT = "fuQJ7_q#eF78A&D";
     private static char[] chars;
     private static Random r;

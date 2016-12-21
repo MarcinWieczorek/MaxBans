@@ -5,8 +5,7 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 
-public class BufferStatement
-{
+public class BufferStatement {
     private final Object[] values;
     private final String query;
     private final Exception stacktrace;

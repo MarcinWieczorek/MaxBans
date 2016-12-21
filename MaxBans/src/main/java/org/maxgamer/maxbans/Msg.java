@@ -12,8 +12,7 @@ import java.io.File;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public class Msg
-{
+public class Msg {
     private static YamlConfiguration cfg;
     
     @SuppressWarnings("deprecation")

@@ -12,8 +12,7 @@ import java.util.Map;
 
 import org.maxgamer.maxbans.MaxBans;
 
-public class VanillaBridge implements Bridge
-{
+public class VanillaBridge implements Bridge {
     @SuppressWarnings("deprecation")
 	public void export() {
         System.out.println("Exporting to Vanilla bans...");

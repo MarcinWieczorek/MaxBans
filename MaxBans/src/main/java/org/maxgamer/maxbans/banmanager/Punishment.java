@@ -2,8 +2,7 @@ package org.maxgamer.maxbans.banmanager;
 
 import org.maxgamer.maxbans.util.Util;
 
-public class Punishment
-{
+public class Punishment {
     protected final String id;
     protected final String reason;
     protected final String banner;

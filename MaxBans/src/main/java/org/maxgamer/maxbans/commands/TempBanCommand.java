@@ -11,8 +11,7 @@ import org.maxgamer.maxbans.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class TempBanCommand extends CmdSkeleton
-{
+public class TempBanCommand extends CmdSkeleton {
     public TempBanCommand() {
         super("tempban", "maxbans.tempban");
     }

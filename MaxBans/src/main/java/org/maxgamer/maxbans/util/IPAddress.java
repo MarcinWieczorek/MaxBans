@@ -2,8 +2,7 @@ package org.maxgamer.maxbans.util;
 
 import java.util.Arrays;
 
-public class IPAddress implements Comparable<IPAddress>
-{
+public class IPAddress implements Comparable<IPAddress> {
     private final int[] bytes;
     
     public IPAddress(final String s) {

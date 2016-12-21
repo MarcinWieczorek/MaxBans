@@ -4,8 +4,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.ChatColor;
 
-public class Formatter
-{
+public class Formatter {
     public static ChatColor primary;
     public static ChatColor secondary;
     public static ChatColor regular;

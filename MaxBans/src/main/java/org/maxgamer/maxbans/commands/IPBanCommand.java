@@ -8,8 +8,7 @@ import org.maxgamer.maxbans.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class IPBanCommand extends CmdSkeleton
-{
+public class IPBanCommand extends CmdSkeleton {
     public IPBanCommand() {
         super("ipban", "maxbans.ipban");
     }

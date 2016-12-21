@@ -7,8 +7,7 @@ import org.maxgamer.maxbans.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class UnbanCommand extends CmdSkeleton
-{
+public class UnbanCommand extends CmdSkeleton {
     public UnbanCommand() {
         super("unban", "maxbans.unban");
     }

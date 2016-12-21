@@ -7,8 +7,7 @@ import org.maxgamer.maxbans.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class MuteCommand extends CmdSkeleton
-{
+public class MuteCommand extends CmdSkeleton {
     public MuteCommand() {
         super("mute", "maxbans.mute");
     }

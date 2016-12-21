@@ -6,8 +6,7 @@ import org.maxgamer.maxbans.util.Formatter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class ReloadCommand extends CmdSkeleton
-{
+public class ReloadCommand extends CmdSkeleton {
     public ReloadCommand() {
         super("mbreload", "maxbans.reload");
         this.namePos = -1;

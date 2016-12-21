@@ -6,8 +6,7 @@ import org.maxgamer.maxbans.util.Formatter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class HistoryCommand extends CmdSkeleton
-{
+public class HistoryCommand extends CmdSkeleton {
     public HistoryCommand() {
         super("history", "maxbans.history");
         this.namePos = -1;

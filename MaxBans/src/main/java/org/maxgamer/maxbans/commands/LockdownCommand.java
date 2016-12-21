@@ -6,8 +6,7 @@ import org.maxgamer.maxbans.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class LockdownCommand extends CmdSkeleton
-{
+public class LockdownCommand extends CmdSkeleton {
     private static String defaultReason;
     
     static {

@@ -3,8 +3,7 @@ package org.maxgamer.maxbans.banmanager;
 import org.maxgamer.maxbans.Msg;
 import org.maxgamer.maxbans.MaxBans;
 
-public class Ban extends Punishment
-{
+public class Ban extends Punishment {
     public Ban(final String user, final String reason, final String banner, final long created) {
         super(user, reason, banner, created);
     }

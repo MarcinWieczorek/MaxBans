@@ -7,8 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class UnWarnCommand extends CmdSkeleton
-{
+public class UnWarnCommand extends CmdSkeleton {
     public UnWarnCommand() {
         super("unwarn", "maxbans.unwarn");
     }

@@ -1,7 +1,6 @@
 package org.maxgamer.maxbans.banmanager;
 
-public class HistoryRecord
-{
+public class HistoryRecord {
     private final String name;
     private final String banner;
     private final String message;

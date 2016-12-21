@@ -3,8 +3,7 @@ package org.maxgamer.maxbans.util;
 import java.io.IOException;
 import java.io.ByteArrayInputStream;
 
-public class InputStreamBuffer extends ByteArrayInputStream
-{
+public class InputStreamBuffer extends ByteArrayInputStream {
     public InputStreamBuffer(final byte[] buf) {
         super(buf);
     }

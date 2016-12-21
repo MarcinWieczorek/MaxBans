@@ -3,8 +3,7 @@ package org.maxgamer.maxbans.sync;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Packet
-{
+public class Packet {
     private String command;
     private Map<String, String> values;
     private static String[] escapers;

@@ -9,8 +9,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.maxgamer.maxbans.util.Formatter;
 
-public class ForceSpawnCommand extends CmdSkeleton
-{
+public class ForceSpawnCommand extends CmdSkeleton {
     public ForceSpawnCommand() {
         super("forcespawn", "maxbans.forcespawn");
     }

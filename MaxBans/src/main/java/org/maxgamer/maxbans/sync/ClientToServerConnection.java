@@ -17,8 +17,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ClientToServerConnection
-{
+public class ClientToServerConnection {
     public static final int CONNECT_FAIL_DELAY = 5000;
     private boolean reconnect;
     private String host;

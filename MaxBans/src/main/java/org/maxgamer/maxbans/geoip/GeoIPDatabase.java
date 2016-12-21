@@ -12,8 +12,7 @@ import java.util.Scanner;
 import java.io.File;
 import java.util.TreeSet;
 
-public class GeoIPDatabase
-{
+public class GeoIPDatabase {
     public static final byte IP_VALUE_POS = 0;
     public static final byte IP_COUNTRY_CODE_POS = 1;
     public static final byte IP_COUNTRY_POS = 1;

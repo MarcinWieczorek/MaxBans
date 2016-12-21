@@ -13,8 +13,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-public class ToggleChat extends CmdSkeleton implements Listener
-{
+public class ToggleChat extends CmdSkeleton implements Listener {
     public static List<String> disable;
     
     static {

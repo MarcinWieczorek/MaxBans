@@ -7,8 +7,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Database
-{
+public class Database {
     private DatabaseCore core;
     
     public Database(final DatabaseCore core) throws ConnectionException {

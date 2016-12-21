@@ -5,8 +5,7 @@ import org.maxgamer.maxbans.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class WarnCommand extends CmdSkeleton
-{
+public class WarnCommand extends CmdSkeleton {
     public WarnCommand() {
         super("warn", "maxbans.warn");
     }

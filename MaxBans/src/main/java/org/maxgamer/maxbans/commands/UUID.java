@@ -8,8 +8,7 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class UUID extends CmdSkeleton
-{
+public class UUID extends CmdSkeleton {
     public UUID() {
         super("uuid", "MaxBans.uuid");
         this.namePos = -1;

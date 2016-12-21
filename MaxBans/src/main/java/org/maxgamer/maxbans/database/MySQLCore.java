@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class MySQLCore implements DatabaseCore
-{
+public class MySQLCore implements DatabaseCore {
     private String url;
     private Properties info;
     //private static final int MAX_CONNECTIONS = 8;

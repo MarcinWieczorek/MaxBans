@@ -8,8 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class ImmuneCommand extends CmdSkeleton
-{
+public class ImmuneCommand extends CmdSkeleton {
     public ImmuneCommand() {
         super("immune", "maxbans.immune");
     }

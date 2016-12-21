@@ -17,8 +17,7 @@ import org.maxgamer.maxbans.util.Formatter;
 import org.maxgamer.maxbans.util.IPAddress;
 import org.maxgamer.maxbans.util.Util;
 
-public class CheckIPCommand extends CmdSkeleton
-{
+public class CheckIPCommand extends CmdSkeleton {
     public CheckIPCommand() {
         super("checkip", "maxbans.checkip");
     }

@@ -8,8 +8,7 @@ import org.maxgamer.maxbans.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class UnbanRangeCommand extends CmdSkeleton
-{
+public class UnbanRangeCommand extends CmdSkeleton {
     public UnbanRangeCommand() {
         super("unrangeban", "maxbans.unbanrange");
         this.minArgs = 1;

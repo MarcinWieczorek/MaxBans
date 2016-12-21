@@ -9,8 +9,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.util.List;
 
-public class SQLiteCore implements DatabaseCore
-{
+public class SQLiteCore implements DatabaseCore {
     private Connection connection;
     private final File dbFile;
     private Thread watcher;

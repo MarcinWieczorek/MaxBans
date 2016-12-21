@@ -15,8 +15,7 @@ import org.maxgamer.maxbans.util.Formatter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class MBExportCommand extends CmdSkeleton
-{
+public class MBExportCommand extends CmdSkeleton {
     public MBExportCommand() {
         super("mbexport", "maxbans.export");
         this.namePos = -1;

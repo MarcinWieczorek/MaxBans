@@ -1,7 +1,6 @@
 package org.maxgamer.maxbans.banmanager;
 
-public class Warn
-{
+public class Warn {
     private final String reason;
     private final String banner;
     private final long expires;

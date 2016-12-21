@@ -11,8 +11,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.maxgamer.maxbans.MaxBans;
 import org.bukkit.event.Listener;
 
-public class ChatListener implements Listener
-{
+public class ChatListener implements Listener {
     private final MaxBans plugin;
     
     public ChatListener(final MaxBans mb) {

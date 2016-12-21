@@ -10,8 +10,7 @@ import org.maxgamer.maxbans.util.Formatter;
 import org.maxgamer.maxbans.util.IPAddress;
 import org.maxgamer.maxbans.util.Util;
 
-public class RangeBanCommand extends CmdSkeleton
-{
+public class RangeBanCommand extends CmdSkeleton {
     public RangeBanCommand() {
         super("rangeban", "maxbans.rangeban");
         this.minArgs = 1;

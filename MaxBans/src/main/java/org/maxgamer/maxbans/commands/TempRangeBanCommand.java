@@ -11,8 +11,7 @@ import org.maxgamer.maxbans.util.Formatter;
 import org.maxgamer.maxbans.util.IPAddress;
 import org.maxgamer.maxbans.util.Util;
 
-public class TempRangeBanCommand extends CmdSkeleton
-{
+public class TempRangeBanCommand extends CmdSkeleton {
     public TempRangeBanCommand() {
         super("temprangeban", "maxbans.temprangeban");
     }

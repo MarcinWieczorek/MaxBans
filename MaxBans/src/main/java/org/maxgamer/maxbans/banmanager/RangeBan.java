@@ -4,8 +4,7 @@ import org.maxgamer.maxbans.Msg;
 import org.maxgamer.maxbans.MaxBans;
 import org.maxgamer.maxbans.util.IPAddress;
 
-public class RangeBan extends Punishment implements Comparable<RangeBan>
-{
+public class RangeBan extends Punishment implements Comparable<RangeBan> {
     private final IPAddress start;
     private final IPAddress end;
     

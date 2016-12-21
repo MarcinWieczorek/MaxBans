@@ -5,8 +5,7 @@ import org.maxgamer.maxbans.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class WhitelistCommand extends CmdSkeleton
-{
+public class WhitelistCommand extends CmdSkeleton {
     public WhitelistCommand() {
         super("mbwhitelist", "maxbans.whitelist");
         this.minArgs = 1;

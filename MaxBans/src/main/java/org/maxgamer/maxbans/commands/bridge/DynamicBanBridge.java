@@ -9,8 +9,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.maxgamer.maxbans.MaxBans;
 import org.maxgamer.maxbans.util.Util;
 
-public class DynamicBanBridge implements Bridge
-{
+public class DynamicBanBridge implements Bridge {
     public void export() {
         throw new NotImplementedException("DynamicBan export is not implemented.");
     }

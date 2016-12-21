@@ -17,8 +17,7 @@ import org.maxgamer.maxbans.MaxBans;
 import org.maxgamer.maxbans.Msg;
 import org.maxgamer.maxbans.util.Formatter;
 
-public abstract class CmdSkeleton implements CommandExecutor, TabCompleter, Comparable<CmdSkeleton>
-{
+public abstract class CmdSkeleton implements CommandExecutor, TabCompleter, Comparable<CmdSkeleton> {
     private static final Set<CmdSkeleton> commands = new HashSet<>();
     protected final MaxBans plugin = MaxBans.instance;
     protected final String perm;

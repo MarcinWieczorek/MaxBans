@@ -5,8 +5,7 @@ import org.maxgamer.maxbans.util.Formatter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class MBCommand extends CmdSkeleton
-{
+public class MBCommand extends CmdSkeleton {
     public MBCommand() {
         super("mb", null);
         this.namePos = -1;

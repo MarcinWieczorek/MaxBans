@@ -1,7 +1,6 @@
 package org.maxgamer.maxbans.sync;
 
-public class Syncer
-{
+public class Syncer {
     private ClientToServerConnection con;
     
     public Syncer(final String host, final int port, String pass) {

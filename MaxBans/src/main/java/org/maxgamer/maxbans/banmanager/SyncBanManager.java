@@ -4,8 +4,7 @@ import org.bukkit.command.CommandSender;
 import org.maxgamer.maxbans.sync.Packet;
 import org.maxgamer.maxbans.MaxBans;
 
-public class SyncBanManager extends BanManager
-{
+public class SyncBanManager extends BanManager {
     private boolean sync;
     
     public SyncBanManager(final MaxBans plugin) {

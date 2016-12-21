@@ -13,8 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class MBDebugCommand extends CmdSkeleton
-{
+public class MBDebugCommand extends CmdSkeleton {
     public MBDebugCommand() {
         super("mbdebug", "maxbans.debug");
         this.namePos = -1;

@@ -18,8 +18,7 @@ import org.maxgamer.maxbans.util.Formatter;
 import org.maxgamer.maxbans.util.IPAddress;
 import org.maxgamer.maxbans.util.Util;
 
-public class CheckBanCommand extends CmdSkeleton
-{
+public class CheckBanCommand extends CmdSkeleton {
     public CheckBanCommand() {
         super("checkban", "");
         this.namePos = 1;

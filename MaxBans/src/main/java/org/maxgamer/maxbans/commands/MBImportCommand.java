@@ -7,8 +7,7 @@ import org.maxgamer.maxbans.util.Formatter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class MBImportCommand extends CmdSkeleton
-{
+public class MBImportCommand extends CmdSkeleton {
     public MBImportCommand() {
         super("mbimport", "maxbans.import");
         this.namePos = -1;

@@ -7,8 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class ClearWarningsCommand extends CmdSkeleton
-{
+public class ClearWarningsCommand extends CmdSkeleton {
     public ClearWarningsCommand() {
         super("clearwarnings", "maxbans.clearwarnings");
     }

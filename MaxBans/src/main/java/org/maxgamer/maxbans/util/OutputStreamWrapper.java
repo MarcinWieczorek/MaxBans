@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.OutputStream;
 
-public class OutputStreamWrapper extends OutputStream
-{
+public class OutputStreamWrapper extends OutputStream {
     private final OutputStream o;
     
     public OutputStreamWrapper(final OutputStream out) {

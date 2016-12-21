@@ -3,8 +3,7 @@ package org.maxgamer.maxbans.banmanager;
 import org.maxgamer.maxbans.Msg;
 import org.maxgamer.maxbans.MaxBans;
 
-public class IPBan extends Ban
-{
+public class IPBan extends Ban {
     public IPBan(final String ip, final String reason, final String banner, final long created) {
         super(ip, reason, banner, created);
     }

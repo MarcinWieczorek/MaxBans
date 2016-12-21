@@ -4,8 +4,7 @@ import java.sql.SQLException;
 import org.maxgamer.maxbans.MaxBans;
 import org.maxgamer.maxbans.database.Database;
 
-public class SQLiteBridge implements Bridge
-{
+public class SQLiteBridge implements Bridge {
     private final Database db;
     
     public SQLiteBridge(final Database db) {

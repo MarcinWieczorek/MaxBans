@@ -7,8 +7,7 @@ import org.maxgamer.maxbans.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class TempIPBanCommand extends CmdSkeleton
-{
+public class TempIPBanCommand extends CmdSkeleton {
     public TempIPBanCommand() {
         super("tempipban", "maxbans.tempipban");
     }

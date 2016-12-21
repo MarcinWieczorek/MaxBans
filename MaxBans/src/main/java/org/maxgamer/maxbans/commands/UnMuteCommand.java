@@ -6,8 +6,7 @@ import org.maxgamer.maxbans.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class UnMuteCommand extends CmdSkeleton
-{
+public class UnMuteCommand extends CmdSkeleton {
     public UnMuteCommand() {
         super("unmute", "maxbans.unmute");
     }

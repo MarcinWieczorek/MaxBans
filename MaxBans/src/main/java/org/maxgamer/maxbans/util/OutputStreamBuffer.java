@@ -3,8 +3,7 @@ package org.maxgamer.maxbans.util;
 import java.io.IOException;
 import java.io.ByteArrayOutputStream;
 
-public class OutputStreamBuffer extends ByteArrayOutputStream
-{
+public class OutputStreamBuffer extends ByteArrayOutputStream {
     public OutputStreamBuffer(final int capacity) {
         super(capacity);
     }
