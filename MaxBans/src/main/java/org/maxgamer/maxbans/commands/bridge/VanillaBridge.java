@@ -22,7 +22,7 @@ public class VanillaBridge implements Bridge
             if (entry.getValue() instanceof TempBan) {
                 continue;
             }
-            final OfflinePlayer p = Bukkit.getOfflinePlayer((String)entry.getKey());
+            final OfflinePlayer p = Bukkit.getOfflinePlayer(entry.getKey());
             if (p.isBanned()) {
                 continue;
             }            
@@ -32,7 +32,7 @@ public class VanillaBridge implements Bridge
             if (entry2.getValue() instanceof TempIPBan) {
                 continue;
             }
-            Bukkit.banIP((String)entry2.getKey());
+            Bukkit.banIP(entry2.getKey());
         }
     }
     

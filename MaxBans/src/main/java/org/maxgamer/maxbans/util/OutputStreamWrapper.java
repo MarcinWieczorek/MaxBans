@@ -6,7 +6,7 @@ import java.io.OutputStream;
 
 public class OutputStreamWrapper extends OutputStream
 {
-    private OutputStream o;
+    private final OutputStream o;
     
     public OutputStreamWrapper(final OutputStream out) {
         super();
@@ -57,7 +57,7 @@ public class OutputStreamWrapper extends OutputStream
         try {
             this.o.close();
         }
-        catch (IOException ex) {}
+        catch (IOException ignored) {}
     }
     
     public void write(final int b) {

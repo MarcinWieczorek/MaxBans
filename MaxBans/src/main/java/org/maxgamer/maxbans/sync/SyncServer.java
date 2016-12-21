@@ -7,29 +7,29 @@ import java.net.Socket;
 import java.net.ServerSocket;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class SyncServer
 {
     public final int MAX_FAILED_AUTH_ATTEMPTS = 10;
-    private int port;
+    private final int port;
     private String pass;
-    private HashSet<ServerToClientConnection> connections;
-    private HashMap<String, Integer> blacklist;
+    private final Set<ServerToClientConnection> connections = new HashSet<>();
+    private final Map<String, Integer> blacklist = new HashMap<>();
     ServerSocket core;
-    private Thread watcher;
+    private final Thread watcher;
     
-    public HashMap<String, Integer> getBlacklist() {
+    public Map<String, Integer> getBlacklist() {
         return this.blacklist;
     }
     
-    public HashSet<ServerToClientConnection> getConnections() {
+    public Set<ServerToClientConnection> getConnections() {
         return this.connections;
     }
     
     public SyncServer(final int port, final String pass) {
         super();
-        this.connections = new HashSet<ServerToClientConnection>();
-        this.blacklist = new HashMap<String, Integer>();
         this.watcher = new Thread() {
             public void run() {
                 while (!SyncServer.this.core.isClosed()) {
@@ -89,7 +89,7 @@ public class SyncServer
         try {
             this.core.close();
         }
-        catch (IOException ex) {}
+        catch (IOException ignored) {}
     }
     
     public void sendAll(final Packet p, final ServerToClientConnection except) {

@@ -19,7 +19,7 @@ public class Database
                     throw new ConnectionException("Database doesn not appear to be valid!");
                 }
             }
-            catch (AbstractMethodError abstractMethodError) {}
+            catch (AbstractMethodError ignored) {}
         }
         catch (SQLException e) {
             throw new ConnectionException(e.getMessage());
@@ -77,7 +77,7 @@ public class Database
     
     public void copyTo(final Database db) throws SQLException {
         ResultSet rs = this.getConnection().getMetaData().getTables(null, null, "%", null);
-        final List<String> tables = new LinkedList<String>();
+        final List<String> tables = new LinkedList<>();
         while (rs.next()) {
             tables.add(rs.getString("TABLE_NAME"));
         }

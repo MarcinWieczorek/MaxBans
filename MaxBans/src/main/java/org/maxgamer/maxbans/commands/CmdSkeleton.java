@@ -3,6 +3,7 @@ package org.maxgamer.maxbans.commands;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,16 +19,12 @@ import org.maxgamer.maxbans.util.Formatter;
 
 public abstract class CmdSkeleton implements CommandExecutor, TabCompleter, Comparable<CmdSkeleton>
 {
-    private static HashSet<CmdSkeleton> commands;
-    protected MaxBans plugin;
-    protected String perm;
+    private static final Set<CmdSkeleton> commands = new HashSet<>();
+    protected final MaxBans plugin = MaxBans.instance;
+    protected final String perm;
     protected int minArgs;
     protected int namePos;
-    protected PluginCommand cmd;
-    
-    static {
-        CmdSkeleton.commands = new HashSet<CmdSkeleton>();
-    }
+    protected final PluginCommand cmd;
     
     public static CmdSkeleton[] getCommands() {
         return CmdSkeleton.commands.toArray(new CmdSkeleton[CmdSkeleton.commands.size()]);
@@ -47,13 +44,12 @@ public abstract class CmdSkeleton implements CommandExecutor, TabCompleter, Comp
     
     public CmdSkeleton(final String command, final String perm) {
         super();
-        this.plugin = MaxBans.instance;
         this.minArgs = 0;
         this.namePos = 1;
         this.perm = perm;
         this.cmd = this.plugin.getCommand(command);
         if (this.cmd != null) {
-            this.cmd.setExecutor((CommandExecutor)this);
+            this.cmd.setExecutor(this);
         }
         CmdSkeleton.commands.add(this);
     }
@@ -98,7 +94,7 @@ public abstract class CmdSkeleton implements CommandExecutor, TabCompleter, Comp
     }
     
     public List<String> onTabComplete(final CommandSender sender, final Command cmd, final String label, final String[] args) {
-        final ArrayList<String> results = new ArrayList<String>();
+        final List<String> results = new ArrayList<>();
         if (args.length == this.namePos) {
             final String partial = args[this.namePos - 1];
             final String bestMatch = this.plugin.getBanManager().match(partial);

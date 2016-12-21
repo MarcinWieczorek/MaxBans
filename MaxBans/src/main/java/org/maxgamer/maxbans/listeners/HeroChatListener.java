@@ -14,7 +14,7 @@ import org.bukkit.event.Listener;
 
 public class HeroChatListener implements Listener
 {
-    private MaxBans plugin;
+    private final MaxBans plugin;
     
     public HeroChatListener(final MaxBans plugin) {
         super();

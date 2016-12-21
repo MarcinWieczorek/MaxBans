@@ -1,6 +1,7 @@
 package org.maxgamer.maxbans.commands;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -14,10 +15,10 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class ToggleChat extends CmdSkeleton implements Listener
 {
-    public static ArrayList<String> disable;
+    public static List<String> disable;
     
     static {
-        ToggleChat.disable = new ArrayList<String>();
+        ToggleChat.disable = new ArrayList<>();
     }
     
     public ToggleChat() {
@@ -42,7 +43,7 @@ public class ToggleChat extends CmdSkeleton implements Listener
     
     @EventHandler(priority = EventPriority.MONITOR)
     public void onAsyncChat(final AsyncPlayerChatEvent e) {
-        final ArrayList<Player> rem = new ArrayList<Player>();
+        final List<Player> rem = new ArrayList<>();
         for (final Player p : e.getRecipients()) {
             if (ToggleChat.disable.contains(p.getName())) {
                 rem.add(p);

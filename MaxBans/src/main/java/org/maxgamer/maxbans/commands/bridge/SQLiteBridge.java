@@ -6,7 +6,7 @@ import org.maxgamer.maxbans.database.Database;
 
 public class SQLiteBridge implements Bridge
 {
-    private Database db;
+    private final Database db;
     
     public SQLiteBridge(final Database db) {
         super();

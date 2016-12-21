@@ -2,8 +2,8 @@ package org.maxgamer.maxbans.geoip;
 
 public class GeoIP implements Comparable<GeoIP>
 {
-    private long value;
-    private String country;
+    private final long value;
+    private final String country;
     
     public GeoIP(final long value, final String country) {
         super();

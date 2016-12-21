@@ -7,10 +7,6 @@ import java.io.IOException;
 
 import org.bukkit.configuration.InvalidConfigurationException;
 
-import java.io.FileNotFoundException;
-
-import org.bukkit.configuration.Configuration;
-
 import java.io.FileOutputStream;
 import java.io.File;
 
@@ -42,10 +38,7 @@ public class Msg
                 in.close();
                 out.close();
             }
-            Msg.cfg.setDefaults((Configuration)defaults);
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Msg.cfg.setDefaults(defaults);
         }
         catch (InvalidConfigurationException e2) {
             e2.printStackTrace();

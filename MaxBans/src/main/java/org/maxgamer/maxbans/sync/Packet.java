@@ -6,7 +6,7 @@ import java.util.Map;
 public class Packet
 {
     private String command;
-    private HashMap<String, String> values;
+    private Map<String, String> values;
     private static String[] escapers;
     private static String[] unescapers;
     
@@ -17,12 +17,12 @@ public class Packet
     
     public Packet() {
         super();
-        this.values = new HashMap<String, String>();
+        this.values = new HashMap<>();
     }
     
     public Packet(final String command) {
         super();
-        this.values = new HashMap<String, String>();
+        this.values = new HashMap<>();
         this.command = command;
     }
     
@@ -58,7 +58,7 @@ public class Packet
         return this;
     }
     
-    public HashMap<String, String> getProperties() {
+    public Map<String, String> getProperties() {
         return this.values;
     }
     

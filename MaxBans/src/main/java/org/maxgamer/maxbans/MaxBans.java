@@ -30,9 +30,7 @@ import org.maxgamer.maxbans.commands.MuteCommand;
 import org.maxgamer.maxbans.commands.IPBanCommand;
 import org.maxgamer.maxbans.commands.BanCommand;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.maxgamer.maxbans.bungee.BungeeListener;
-import org.bukkit.event.Listener;
 import org.maxgamer.maxbans.commands.ToggleChat;
 import org.maxgamer.maxbans.banmanager.SyncBanManager;
 import java.io.IOException;
@@ -40,7 +38,6 @@ import org.maxgamer.maxbans.database.DatabaseCore;
 import org.maxgamer.maxbans.database.SQLiteCore;
 import org.maxgamer.maxbans.database.MySQLCore;
 import org.maxgamer.maxbans.util.Formatter;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.Bukkit;
 import java.io.BufferedInputStream;
 import java.net.URL;
@@ -115,13 +112,13 @@ public class MaxBans extends JavaPlugin
                     }
                 }
             };
-            Bukkit.getScheduler().runTaskAsynchronously((Plugin)this, download);
+            Bukkit.getScheduler().runTaskAsynchronously(this, download);
         }
         else {
             this.geoIPDB = new GeoIPDatabase(geoCSV);
         }
         this.filter_names = this.getConfig().getBoolean("filter-names");
-        Formatter.load((Plugin)this);
+        Formatter.load(this);
         final ConfigurationSection dbConfig = this.getConfig().getConfigurationSection("database");
         DatabaseCore dbCore;
         if (this.getConfig().getBoolean("database.mysql", false)) {
@@ -151,7 +148,7 @@ public class MaxBans extends JavaPlugin
         catch (Database.ConnectionException e1) {
             e1.printStackTrace();
             System.out.println("Failed to create connection to database. Disabling MaxBans :(");
-            this.getServer().getPluginManager().disablePlugin((Plugin)this);
+            this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
         final ConfigurationSection syncConfig = this.getConfig().getConfigurationSection("sync");
@@ -176,24 +173,24 @@ public class MaxBans extends JavaPlugin
             this.banManager = new BanManager(this);
         }
         this.registerCommands();
-        Bukkit.getServer().getPluginManager().registerEvents((Listener)new ToggleChat(), (Plugin)this);
+        Bukkit.getServer().getPluginManager().registerEvents(new ToggleChat(), this);
         if (Bukkit.getPluginManager().getPlugin("Herochat") != null) {
             this.getLogger().info("Found Herochat... Hooking!");
             this.herochatListener = new HeroChatListener(this);
-            Bukkit.getServer().getPluginManager().registerEvents((Listener)this.herochatListener, (Plugin)this);
+            Bukkit.getServer().getPluginManager().registerEvents(this.herochatListener, this);
         }
         else {
             this.chatListener = new ChatListener(this);
-            Bukkit.getServer().getPluginManager().registerEvents((Listener)this.chatListener, (Plugin)this);
+            Bukkit.getServer().getPluginManager().registerEvents(this.chatListener, this);
         }
         this.joinListener = new JoinListener();
         this.chatCommandListener = new ChatCommandListener();
-        Bukkit.getServer().getPluginManager().registerEvents((Listener)this.joinListener, (Plugin)this);
-        Bukkit.getServer().getPluginManager().registerEvents((Listener)this.chatCommandListener, (Plugin)this);
+        Bukkit.getServer().getPluginManager().registerEvents(this.joinListener, this);
+        Bukkit.getServer().getPluginManager().registerEvents(this.chatCommandListener, this);
         this.startMetrics();
         if (this.isBungee()) {
-            Bukkit.getMessenger().registerIncomingPluginChannel((Plugin)this, "BungeeCord", (PluginMessageListener)new BungeeListener());
-            Bukkit.getMessenger().registerOutgoingPluginChannel((Plugin)this, "BungeeCord");
+            Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeListener());
+            Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         }
     }
     
@@ -262,7 +259,7 @@ public class MaxBans extends JavaPlugin
             if (this.metrics != null) {
                 return;
             }
-            this.metrics = new Metrics((Plugin)this);
+            this.metrics = new Metrics(this);
             if (!this.metrics.start()) {
                 return;
             }

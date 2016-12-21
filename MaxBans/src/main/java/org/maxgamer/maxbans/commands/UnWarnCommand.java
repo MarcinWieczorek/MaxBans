@@ -25,7 +25,7 @@ public class UnWarnCommand extends CmdSkeleton
         }
         String banner;
         if (sender instanceof Player) {
-            banner = ((Player)sender).getName();
+            banner = sender.getName();
         }
         else {
             banner = "Console";

@@ -1,6 +1,9 @@
 package org.maxgamer.maxbans.geoip;
 
 import org.maxgamer.maxbans.util.IPAddress;
+
+import java.util.List;
+import java.util.NavigableSet;
 import java.util.regex.Matcher;
 import java.util.LinkedList;
 import java.util.regex.Pattern;
@@ -14,11 +17,10 @@ public class GeoIPDatabase
     public static final byte IP_VALUE_POS = 0;
     public static final byte IP_COUNTRY_CODE_POS = 1;
     public static final byte IP_COUNTRY_POS = 1;
-    private TreeSet<GeoIP> info;
-    private File file;
+    private final NavigableSet<GeoIP> info = new TreeSet<>();
+    private final File file;
     
     public void reload() {
-        this.info = new TreeSet<GeoIP>();
         if (this.file == null || !this.file.exists()) {
             System.out.println("WARNING: Could not load GeoIPDatabase. The file does not exist.");
             return;
@@ -38,7 +40,7 @@ public class GeoIPDatabase
             try {
                 final String s = sc.nextLine();
                 final Matcher matcher = pattern.matcher(s);
-                final LinkedList<String> strs = new LinkedList<String>();
+                final List<String> strs = new LinkedList<>();
                 while (matcher.find()) {
                     strs.add(matcher.group());
                 }

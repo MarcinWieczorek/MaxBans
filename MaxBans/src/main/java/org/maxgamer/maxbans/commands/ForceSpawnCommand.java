@@ -5,7 +5,6 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.maxgamer.maxbans.util.Formatter;
@@ -21,7 +20,7 @@ public class ForceSpawnCommand extends CmdSkeleton
             final String name = args[0];
             String banner;
             if (sender instanceof Player) {
-                banner = ((Player)sender).getName();
+                banner = sender.getName();
             }
             else {
                 banner = "Console";
@@ -29,7 +28,7 @@ public class ForceSpawnCommand extends CmdSkeleton
             final Player p = Bukkit.getPlayer(name);
             if (p != null) {
                 final PlayerRespawnEvent e = new PlayerRespawnEvent(p, Bukkit.getWorlds().get(0).getSpawnLocation(), false);
-                Bukkit.getPluginManager().callEvent((Event)e);
+                Bukkit.getPluginManager().callEvent(e);
                 final Location spawn = e.getRespawnLocation();
                 p.teleport(spawn, PlayerTeleportEvent.TeleportCause.PLUGIN);
                 p.teleport(spawn, PlayerTeleportEvent.TeleportCause.PLUGIN);

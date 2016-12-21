@@ -6,8 +6,8 @@ import org.maxgamer.maxbans.util.IPAddress;
 
 public class RangeBan extends Punishment implements Comparable<RangeBan>
 {
-    private IPAddress start;
-    private IPAddress end;
+    private final IPAddress start;
+    private final IPAddress end;
     
     public RangeBan(final String banner, final String reason, final long created, final IPAddress start, final IPAddress end) {
         super(start + "-" + end, reason, banner, created);

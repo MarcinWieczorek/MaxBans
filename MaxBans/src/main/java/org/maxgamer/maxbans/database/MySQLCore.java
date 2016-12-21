@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class MySQLCore implements DatabaseCore
@@ -12,10 +13,10 @@ public class MySQLCore implements DatabaseCore
     private String url;
     private Properties info;
     //private static final int MAX_CONNECTIONS = 8;
-    private static ArrayList<Connection> pool;
+    private static List<Connection> pool;
     
     static {
-        MySQLCore.pool = new ArrayList<Connection>();
+        MySQLCore.pool = new ArrayList<>();
     }
     
     public MySQLCore(final String host, final String user, final String pass, final String database, final String port) {
@@ -59,7 +60,7 @@ public class MySQLCore implements DatabaseCore
                 try {
                     Thread.sleep(15L);
                 }
-                catch (InterruptedException ex) {}
+                catch (InterruptedException ignored) {}
                 this.getConnection();
             }
             final PreparedStatement ps = bs.prepareStatement(con);

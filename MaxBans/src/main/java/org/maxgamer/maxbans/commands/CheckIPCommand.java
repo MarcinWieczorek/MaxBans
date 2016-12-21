@@ -1,7 +1,8 @@
 package org.maxgamer.maxbans.commands;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -52,8 +53,8 @@ public class CheckIPCommand extends CmdSkeleton
                     sender.sendMessage(Formatter.primary + "Proxy: " + Formatter.secondary + ((r.getStatus() == DNSBL.DNSStatus.ALLOWED) ? "False" : "True"));
                 }
             }
-            final HashSet<String> dupeip = this.plugin.getBanManager().getUsers(ip);
-            final ArrayList<UUID> ids = new ArrayList<UUID>();
+            final Set<String> dupeip = this.plugin.getBanManager().getUsers(ip);
+            final List<UUID> ids = new ArrayList<>();
             for (final String s : dupeip) {
                 try {
                     @SuppressWarnings("deprecation")
@@ -63,7 +64,7 @@ public class CheckIPCommand extends CmdSkeleton
                     }
                     ids.add(p.getUniqueId());
                 }
-                catch (Exception ex) {}
+                catch (Exception ignored) {}
             }
             sender.sendMessage(Formatter.primary + "Users: " + Formatter.secondary + ((dupeip == null) ? "0" : dupeip.size()));
             sender.sendMessage(Formatter.primary + "Unique IDs: " + Formatter.secondary + ((dupeip == null) ? "0" : dupeip.size()));

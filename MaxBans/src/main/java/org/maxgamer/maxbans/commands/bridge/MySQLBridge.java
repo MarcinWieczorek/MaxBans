@@ -6,7 +6,7 @@ import org.maxgamer.maxbans.database.Database;
 
 public class MySQLBridge implements Bridge
 {
-    private Database db;
+    private final Database db;
     
     public MySQLBridge(final Database db) {
         super();

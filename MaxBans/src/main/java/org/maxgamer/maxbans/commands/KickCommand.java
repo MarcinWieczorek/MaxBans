@@ -27,7 +27,7 @@ public class KickCommand extends CmdSkeleton
         final String reason = Util.buildReason(args);
         String banner;
         if (sender instanceof Player) {
-            banner = ((Player)sender).getName();
+            banner = sender.getName();
         }
         else {
             banner = "Console";

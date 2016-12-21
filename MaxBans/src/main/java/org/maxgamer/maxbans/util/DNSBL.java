@@ -2,7 +2,7 @@ package org.maxgamer.maxbans.util;
 
 import java.net.UnknownHostException;
 import java.net.InetAddress;
-import org.bukkit.plugin.Plugin;
+
 import org.maxgamer.maxbans.Msg;
 import org.maxgamer.maxbans.sync.Packet;
 import org.bukkit.Bukkit;
@@ -16,13 +16,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import org.maxgamer.maxbans.MaxBans;
 import java.util.HashMap;
+import java.util.Map;
 
 public class DNSBL
 {
-    private HashMap<String, CacheRecord> history;
+    private final Map<String, CacheRecord> history = new HashMap<>();
     private MaxBans plugin;
     private static long cache_timeout;
-    private ArrayList<String> servers;
+    private final List<String> servers = new ArrayList<>();
     private boolean kick;
     private boolean notify;
     
@@ -30,21 +31,19 @@ public class DNSBL
         DNSBL.cache_timeout = 604800000L;
     }
     
-    public HashMap<String, CacheRecord> getHistory() {
+    public Map<String, CacheRecord> getHistory() {
         return this.history;
     }
     
     public DNSBL(final MaxBans plugin) {
         super();
-        this.history = new HashMap<String, CacheRecord>();
-        this.servers = new ArrayList<String>();
         this.kick = false;
         this.notify = true;
         this.plugin = plugin;
         final Database db = plugin.getDB();
         this.kick = plugin.getConfig().getBoolean("dnsbl.kick");
         this.notify = plugin.getConfig().getBoolean("dnsbl.notify");
-        final List<String> cfgServers = (List<String>)this.plugin.getConfig().getStringList("dnsbl.servers");
+        final List<String> cfgServers = this.plugin.getConfig().getStringList("dnsbl.servers");
         if (cfgServers != null) {
             this.servers.addAll(cfgServers);
         }
@@ -86,7 +85,7 @@ public class DNSBL
     public void handle(final Player p, final String address) {
         final CacheRecord r = this.getRecord(address);
         if (r == null) {
-            Bukkit.getScheduler().runTaskAsynchronously((Plugin)this.plugin, (Runnable)new Runnable() {
+            Bukkit.getScheduler().runTaskAsynchronously(this.plugin, new Runnable() {
                 public void run() {
                     final CacheRecord r = DNSBL.this.reload(address);
                     if (DNSBL.this.plugin.getSyncer() != null) {
@@ -95,7 +94,7 @@ public class DNSBL
                         DNSBL.this.plugin.getSyncer().broadcast(packet);
                     }
                     if (r.getStatus() == DNSStatus.DENIED) {
-                        Bukkit.getScheduler().runTask((Plugin)DNSBL.this.plugin, (Runnable)new Runnable() {
+                        Bukkit.getScheduler().runTask(DNSBL.this.plugin, new Runnable() {
                             public void run() {
                                 if (DNSBL.this.kick && p.isOnline()) {
                                     final String msg = Msg.get("disconnection.you-are-proxied", "ip", address);
@@ -133,7 +132,7 @@ public class DNSBL
         }
     }
     
-    public ArrayList<String> getServers() {
+    public List<String> getServers() {
         return this.servers;
     }
     
@@ -152,9 +151,9 @@ public class DNSBL
     public CacheRecord reload(final String ip) {
         final String[] parts = ip.split("\\.");
         final StringBuilder buffer = new StringBuilder();
-        for (int i = 0; i < parts.length; ++i) {
+        for (String part : parts) {
             buffer.insert(0, '.');
-            buffer.insert(0, parts[i]);
+            buffer.insert(0, part);
         }
         final String reverse = buffer.toString();
         CacheRecord r = new CacheRecord(DNSStatus.ALLOWED);
@@ -164,9 +163,8 @@ public class DNSBL
                     r = new CacheRecord(DNSStatus.DENIED);
                     break;
                 }
-                continue;
             }
-            catch (UnknownHostException ex) {}
+            catch (UnknownHostException ignored) {}
         }
         this.setRecord(ip, r);
         return r;
@@ -186,13 +184,13 @@ public class DNSBL
     {
         ALLOWED, 
         DENIED, 
-        UNKNOWN;
+        UNKNOWN
     }
     
     public static class CacheRecord
     {
-        private DNSStatus status;
-        private long created;
+        private final DNSStatus status;
+        private final long created;
         
         public CacheRecord(final DNSStatus status, final long created) {
             super();

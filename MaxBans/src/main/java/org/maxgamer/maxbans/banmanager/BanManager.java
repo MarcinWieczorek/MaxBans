@@ -12,7 +12,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.NavigableSet;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
@@ -21,7 +24,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.maxgamer.maxbans.MaxBans;
 import org.maxgamer.maxbans.database.Database;
 import org.maxgamer.maxbans.database.DatabaseHelper;
@@ -31,58 +33,42 @@ import org.maxgamer.maxbans.util.IPAddress;
 
 public class BanManager
 {
-    protected MaxBans plugin;
-    private HashMap<String, Ban> bans;
-    private HashMap<String, TempBan> tempbans;
-    private HashMap<String, IPBan> ipbans;
-    private HashMap<String, TempIPBan> tempipbans;
-    private HashSet<String> whitelist;
-    private HashMap<String, Mute> mutes;
-    private HashMap<String, TempMute> tempmutes;
-    private HashMap<String, List<Warn>> warnings;
-    private ArrayList<HistoryRecord> history;
-    private HashMap<String, ArrayList<HistoryRecord>> personalHistory;
-    private HashMap<String, String> recentips;
-    private HashMap<String, HashSet<String>> iplookup;
-    private TrieSet players;
-    private HashMap<String, String> actualNames;
-    private HashSet<String> chatCommands;
+    protected final MaxBans plugin;
+    private final Map<String, Ban> bans = new HashMap<>();
+    private final Map<String, TempBan> tempbans = new HashMap<>();
+    private final Map<String, IPBan> ipbans = new HashMap<>();
+    private final Map<String, TempIPBan> tempipbans = new HashMap<>();
+    private final Set<String> whitelist = new HashSet<>();
+    private final Map<String, Mute> mutes = new HashMap<>();
+    private final Map<String, TempMute> tempmutes = new HashMap<>();
+    private final Map<String, List<Warn>> warnings = new HashMap<>();
+    private final List<HistoryRecord> history = new ArrayList<>(50);
+    private final Map<String, List<HistoryRecord>> personalHistory = new HashMap<>();
+    private Map<String, String> recentips = new HashMap<>();
+    private final Map<String, Set<String>> iplookup = new HashMap<>();
+    private final TrieSet players = new TrieSet();
+    private final Map<String, String> actualNames = new HashMap<>();
+    private final Set<String> chatCommands = new HashSet<>();
     private boolean lockdown;
     private String lockdownReason;
     public String defaultReason;
     private String appealMessage;
     private Database db;
     private DNSBL dnsbl;
-    private HashSet<String> immunities;
-    private TreeSet<RangeBan> rangebans;
+    private final Set<String> immunities = new HashSet<>();
+    private final NavigableSet<RangeBan> rangebans = new TreeSet<>();
     
-    public HashSet<String> getWhitelist() {
+    public Set<String> getWhitelist() {
         return this.whitelist;
     }
     
     public BanManager(final MaxBans plugin) {
         super();
-        this.bans = new HashMap<String, Ban>();
-        this.tempbans = new HashMap<String, TempBan>();
-        this.ipbans = new HashMap<String, IPBan>();
-        this.tempipbans = new HashMap<String, TempIPBan>();
-        this.whitelist = new HashSet<String>();
-        this.mutes = new HashMap<String, Mute>();
-        this.tempmutes = new HashMap<String, TempMute>();
-        this.warnings = new HashMap<String, List<Warn>>();
-        this.history = new ArrayList<HistoryRecord>(50);
-        this.personalHistory = new HashMap<String, ArrayList<HistoryRecord>>();
-        this.recentips = new HashMap<String, String>();
-        this.iplookup = new HashMap<String, HashSet<String>>();
-        this.players = new TrieSet();
-        this.actualNames = new HashMap<String, String>();
-        this.chatCommands = new HashSet<String>();
+        this.recentips = new HashMap<>();
         this.lockdown = false;
         this.lockdownReason = "Maintenance";
         this.defaultReason = "Misconduct";
         this.appealMessage = "";
-        this.immunities = new HashSet<String>();
-        this.rangebans = new TreeSet<RangeBan>();
         this.plugin = plugin;
         this.db = plugin.getDB();
         this.reload();
@@ -96,31 +82,31 @@ public class BanManager
         this.appealMessage = ChatColor.translateAlternateColorCodes('&', msg);
     }
     
-    public HashMap<String, Ban> getBans() {
+    public Map<String, Ban> getBans() {
         return this.bans;
     }
     
-    public HashMap<String, IPBan> getIPBans() {
+    public Map<String, IPBan> getIPBans() {
         return this.ipbans;
     }
     
-    public HashMap<String, Mute> getMutes() {
+    public Map<String, Mute> getMutes() {
         return this.mutes;
     }
     
-    public HashMap<String, TempBan> getTempBans() {
+    public Map<String, TempBan> getTempBans() {
         return this.tempbans;
     }
     
-    public HashMap<String, TempIPBan> getTempIPBans() {
+    public Map<String, TempIPBan> getTempIPBans() {
         return this.tempipbans;
     }
     
-    public HashMap<String, TempMute> getTempMutes() {
+    public Map<String, TempMute> getTempMutes() {
         return this.tempmutes;
     }
     
-    public HashMap<String, String> getPlayers() {
+    public Map<String, String> getPlayers() {
         return this.actualNames;
     }
     
@@ -129,7 +115,7 @@ public class BanManager
     }
     
     public HistoryRecord[] getHistory(final String name) {
-        final ArrayList<HistoryRecord> history = this.personalHistory.get(name);
+        final List<HistoryRecord> history = this.personalHistory.get(name);
         if (history != null) {
             return history.toArray(new HistoryRecord[history.size()]);
         }
@@ -142,9 +128,9 @@ public class BanManager
         final HistoryRecord record = new HistoryRecord(name, banner, message);
         this.history.add(0, record);
         this.plugin.getDB().execute("INSERT INTO history (created, message, name, banner) VALUES (?, ?, ?, ?)", System.currentTimeMillis(), message, name, banner);
-        ArrayList<HistoryRecord> personal = this.personalHistory.get(name);
+        List<HistoryRecord> personal = this.personalHistory.get(name);
         if (personal == null) {
-            personal = new ArrayList<HistoryRecord>();
+            personal = new ArrayList<>();
             this.personalHistory.put(name, personal);
         }
         personal.add(0, record);
@@ -153,7 +139,7 @@ public class BanManager
         }
         personal = this.personalHistory.get(banner);
         if (personal == null) {
-            personal = new ArrayList<HistoryRecord>();
+            personal = new ArrayList<>();
             this.personalHistory.put(banner, personal);
         }
         personal.add(0, record);
@@ -301,9 +287,9 @@ public class BanManager
                     final String name = rs.getString("name").toLowerCase();
                     final String ip2 = rs.getString("ip");
                     this.recentips.put(name, ip2);
-                    HashSet<String> list = this.iplookup.get(ip2);
+                    Set<String> list = this.iplookup.get(ip2);
                     if (list == null) {
-                        list = new HashSet<String>(2);
+                        list = new HashSet<>(2);
                         this.iplookup.put(ip2, list);
                     }
                     list.add(name);
@@ -331,7 +317,7 @@ public class BanManager
                     final Warn warn = new Warn(reason, banner, expires);
                     List<Warn> warns = this.warnings.get(name.toLowerCase());
                     if (warns == null) {
-                        warns = new ArrayList<Warn>();
+                        warns = new ArrayList<>();
                         this.warnings.put(name.toLowerCase(), warns);
                     }
                     warns.add(warn);
@@ -342,7 +328,7 @@ public class BanManager
             }
             try {
                 this.plugin.getLogger().info("Loading chat commands...");
-                final List<String> cmds = (List<String>)this.plugin.getConfig().getStringList("chat-commands");
+                final List<String> cmds = this.plugin.getConfig().getStringList("chat-commands");
                 for (final String s : cmds) {
                     this.addChatCommand(s);
                 }
@@ -371,9 +357,9 @@ public class BanManager
                     }
                     final HistoryRecord record = new HistoryRecord(name, banner2, message, created);
                     this.history.add(record);
-                    ArrayList<HistoryRecord> personal = this.personalHistory.get(name);
+                    List<HistoryRecord> personal = this.personalHistory.get(name);
                     if (personal == null) {
-                        personal = new ArrayList<HistoryRecord>();
+                        personal = new ArrayList<>();
                         this.personalHistory.put(name, personal);
                     }
                     personal.add(record);
@@ -382,7 +368,7 @@ public class BanManager
                     }
                     personal = this.personalHistory.get(banner2);
                     if (personal == null) {
-                        personal = new ArrayList<HistoryRecord>();
+                        personal = new ArrayList<>();
                         this.personalHistory.put(banner2, personal);
                     }
                     personal.add(record);
@@ -520,19 +506,19 @@ public class BanManager
         return this.getIPBan(addr.getHostAddress());
     }
     
-    public HashMap<String, String> getIPHistory() {
+    public Map<String, String> getIPHistory() {
         return this.recentips;
     }
     
-    public HashSet<String> getUsers(final String ip) {
+    public Set<String> getUsers(final String ip) {
         if (ip == null) {
             return null;
         }
-        final HashSet<String> ips = this.iplookup.get(ip);
+        final Set<String> ips = this.iplookup.get(ip);
         if (ips == null) {
             return null;
         }
-        return new HashSet<String>(ips);
+        return new HashSet<>(ips);
     }
     
     public List<Warn> getWarnings(String name) {
@@ -589,7 +575,7 @@ public class BanManager
             r.run();
         }
         else {
-            Bukkit.getScheduler().runTask((Plugin)MaxBans.instance, r);
+            Bukkit.getScheduler().runTask(MaxBans.instance, r);
         }
     }
     
@@ -611,7 +597,7 @@ public class BanManager
             r.run();
         }
         else {
-            Bukkit.getScheduler().runTask((Plugin)MaxBans.instance, r);
+            Bukkit.getScheduler().runTask(MaxBans.instance, r);
         }
     }
     
@@ -729,7 +715,7 @@ public class BanManager
         }
         List<Warn> warns = this.getWarnings(name);
         if (warns == null) {
-            warns = new ArrayList<Warn>();
+            warns = new ArrayList<>();
             this.warnings.put(name, warns);
         }
         warns.add(new Warn(reason, banner, expires));
@@ -767,12 +753,12 @@ public class BanManager
                     for (int length = (array = cmds).length, j = 0; j < length; ++j) {
                         String cmd = array[j];
                         cmd = cmd.trim();
-                        CommandSender sender = (CommandSender)Bukkit.getConsoleSender();
+                        CommandSender sender = Bukkit.getConsoleSender();
                         if (cmd.startsWith("/")) {
                             cmd = cmd.replaceFirst("/", "");
                             final Player pBanner = Bukkit.getPlayerExact(banner);
                             if (pBanner != null) {
-                                sender = (CommandSender)pBanner;
+                                sender = pBanner;
                             }
                         }
                         final String lowercaseCmd = cmd.toLowerCase();
@@ -857,15 +843,15 @@ public class BanManager
         }
         final boolean isNew = this.recentips.put(name, ip) == null;
         if (!isNew) {
-            final HashSet<String> usersFromOldIP = this.iplookup.get(oldIP);
+            final Set<String> usersFromOldIP = this.iplookup.get(oldIP);
             usersFromOldIP.remove(name);
         }
         else {
             this.players.add(name);
         }
-        HashSet<String> usersFromNewIP = this.iplookup.get(ip);
+        Set<String> usersFromNewIP = this.iplookup.get(ip);
         if (usersFromNewIP == null) {
-            usersFromNewIP = new HashSet<String>();
+            usersFromNewIP = new HashSet<>();
             this.iplookup.put(ip, usersFromNewIP);
         }
         usersFromNewIP.add(name);
@@ -927,7 +913,7 @@ public class BanManager
         return partial;
     }
     
-    public HashSet<String> matchAll(String partial) {
+    public Set<String> matchAll(String partial) {
         partial = partial.toLowerCase();
         return this.players.matches(partial);
     }
@@ -948,13 +934,13 @@ public class BanManager
         this.lockdown = lockdown;
         reason = ChatColor.translateAlternateColorCodes('&', reason);
         if (lockdown) {
-            this.plugin.getConfig().set("lockdown", (Object)true);
-            this.plugin.getConfig().set("lockdown-reason", (Object)reason);
+            this.plugin.getConfig().set("lockdown", true);
+            this.plugin.getConfig().set("lockdown-reason", reason);
             this.lockdownReason = reason;
         }
         else {
-            this.plugin.getConfig().set("lockdown", (Object)false);
-            this.plugin.getConfig().set("lockdown-reason", (Object)"");
+            this.plugin.getConfig().set("lockdown", false);
+            this.plugin.getConfig().set("lockdown-reason", "");
             this.lockdownReason = "";
         }
         this.plugin.saveConfig();
@@ -1028,8 +1014,8 @@ public class BanManager
         return success;
     }
     
-    public HashSet<String> getImmunities() {
-        return new HashSet<String>(this.immunities);
+    public Set<String> getImmunities() {
+        return new HashSet<>(this.immunities);
     }
     
     public boolean isBanned(final IPAddress ip) {
@@ -1077,7 +1063,7 @@ public class BanManager
         }
     }
     
-    public TreeSet<RangeBan> getRangeBans() {
+    public NavigableSet<RangeBan> getRangeBans() {
         return this.rangebans;
     }
 }

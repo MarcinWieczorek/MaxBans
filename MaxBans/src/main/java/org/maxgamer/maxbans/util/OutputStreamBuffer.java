@@ -44,7 +44,7 @@ public class OutputStreamBuffer extends ByteArrayOutputStream
         try {
             super.close();
         }
-        catch (IOException ex) {}
+        catch (IOException ignored) {}
     }
     
     public int position() {

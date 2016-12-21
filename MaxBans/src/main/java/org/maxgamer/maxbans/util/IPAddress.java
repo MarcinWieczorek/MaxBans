@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class IPAddress implements Comparable<IPAddress>
 {
-    private int[] bytes;
+    private final int[] bytes;
     
     public IPAddress(final String s) {
         super();

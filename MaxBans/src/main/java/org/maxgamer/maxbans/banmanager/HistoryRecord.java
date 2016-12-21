@@ -2,10 +2,10 @@ package org.maxgamer.maxbans.banmanager;
 
 public class HistoryRecord
 {
-    private String name;
-    private String banner;
-    private String message;
-    private long created;
+    private final String name;
+    private final String banner;
+    private final String message;
+    private final long created;
     
     public HistoryRecord(final String name, final String banner, final String message) {
         this(name, banner, message, System.currentTimeMillis());

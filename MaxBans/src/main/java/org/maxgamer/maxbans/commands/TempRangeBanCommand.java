@@ -32,9 +32,9 @@ public class TempRangeBanCommand extends CmdSkeleton
             sender.sendMessage(ChatColor.RED + "Not enough IP addresses supplied! Usage: " + this.getUsage());
             return true;
         }
-        for (int i = 0; i < ips.length; ++i) {
-            if (!Util.isIP(ips[i])) {
-                sender.sendMessage(ChatColor.RED + ips[i] + " is not a valid IP address.");
+        for (String ip : ips) {
+            if (!Util.isIP(ip)) {
+                sender.sendMessage(ChatColor.RED + ip + " is not a valid IP address.");
                 return true;
             }
         }

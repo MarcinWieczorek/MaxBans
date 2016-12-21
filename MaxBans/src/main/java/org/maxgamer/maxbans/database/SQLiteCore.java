@@ -7,17 +7,17 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.io.File;
 import java.sql.Connection;
+import java.util.List;
 
 public class SQLiteCore implements DatabaseCore
 {
     private Connection connection;
-    private File dbFile;
+    private final File dbFile;
     private Thread watcher;
-    private volatile LinkedList<BufferStatement> queue;
+    private final LinkedList<BufferStatement> queue = new LinkedList<>();
     
     public SQLiteCore(final File dbFile) {
         super();
-        this.queue = new LinkedList<BufferStatement>();
         this.dbFile = dbFile;
     }
     
@@ -35,12 +35,8 @@ public class SQLiteCore implements DatabaseCore
                 Class.forName("org.sqlite.JDBC");
                 return this.connection = DriverManager.getConnection("jdbc:sqlite:" + this.dbFile);
             }
-            catch (ClassNotFoundException e2) {
+            catch (ClassNotFoundException | SQLException e2) {
                 e2.printStackTrace();
-                return null;
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
                 return null;
             }
         }
@@ -92,7 +88,7 @@ public class SQLiteCore implements DatabaseCore
                 try {
                     Thread.sleep(30000L);
                 }
-                catch (InterruptedException ex) {}
+                catch (InterruptedException ignored) {}
                 SQLiteCore.this.flush();
             }
         }).start();

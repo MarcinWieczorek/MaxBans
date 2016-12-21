@@ -1,6 +1,6 @@
 package org.maxgamer.maxbans.commands;
 
-import java.util.HashSet;
+import java.util.Set;
 
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -68,7 +68,7 @@ public class DupeIPCommand extends CmdSkeleton
                 sender.sendMessage("Player has never played!");
             }
             final StringBuilder sb = new StringBuilder();
-            final HashSet<String> dupes = this.plugin.getBanManager().getUsers(ip);
+            final Set<String> dupes = this.plugin.getBanManager().getUsers(ip);
             if (dupes != null) {
                 for (final String dupe : dupes) {
                     if (dupe.equalsIgnoreCase(name)) {

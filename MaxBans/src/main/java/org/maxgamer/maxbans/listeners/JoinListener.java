@@ -16,8 +16,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.EventHandler;
-import org.bukkit.plugin.Plugin;
-import java.util.HashSet;
+
+import java.util.Set;
+
 import org.bukkit.entity.Player;
 import org.bukkit.Bukkit;
 import org.maxgamer.maxbans.commands.DupeIPCommand;
@@ -32,7 +33,7 @@ public class JoinListener extends ListenerSkeleton
         }
         final Runnable r = new Runnable() {
             public void run() {
-                final HashSet<String> dupes = JoinListener.this.getPlugin().getBanManager().getUsers(e.getAddress().getHostAddress());
+                final Set<String> dupes = JoinListener.this.getPlugin().getBanManager().getUsers(e.getAddress().getHostAddress());
                 if (dupes == null) {
                     return;
                 }
@@ -54,7 +55,7 @@ public class JoinListener extends ListenerSkeleton
             }
         };
         if (this.getPlugin().isBungee()) {
-            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)this.getPlugin(), r);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(this.getPlugin(), r);
         }
         else {
             r.run();
@@ -71,7 +72,7 @@ public class JoinListener extends ListenerSkeleton
                 return;
             }
             final String name = player.getName();
-            Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)this.getPlugin(), (Runnable)new Runnable() {
+            Bukkit.getScheduler().runTaskLaterAsynchronously(this.getPlugin(), new Runnable() {
                 public void run() {
                     final Player p = Bukkit.getPlayerExact(name);
                     if (p != null) {
@@ -85,15 +86,15 @@ public class JoinListener extends ListenerSkeleton
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEnter(final PlayerJoinEvent e) {
         if (MaxBans.instance.isBungee()) {
-            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)MaxBans.instance, (Runnable)new Runnable() {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(MaxBans.instance, new Runnable() {
                 public void run() {
                     final ByteArrayOutputStream b = new ByteArrayOutputStream();
                     final DataOutputStream out = new DataOutputStream(b);
                     try {
                         out.writeUTF("IP");
                     }
-                    catch (IOException ex) {}
-                    e.getPlayer().sendPluginMessage((Plugin)MaxBans.instance, "BungeeCord", b.toByteArray());
+                    catch (IOException ignored) {}
+                    e.getPlayer().sendPluginMessage(MaxBans.instance, "BungeeCord", b.toByteArray());
                 }
             });
         }

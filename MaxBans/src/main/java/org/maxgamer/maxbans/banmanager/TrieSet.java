@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class TrieSet
 {
@@ -30,8 +31,8 @@ public class TrieSet
     }
     
     private Path nearestPath(final String s) {
-        final List<Path> potential = new ArrayList<Path>();
-        final List<Path> next = new ArrayList<Path>();
+        final List<Path> potential = new ArrayList<>();
+        final List<Path> next = new ArrayList<>();
         final TrieNode node = this.getNode(s);
         if (node == null) {
             return null;
@@ -126,8 +127,8 @@ public class TrieSet
         return false;
     }
     
-    public HashSet<String> matches(final String s) {
-        final HashSet<String> keys = new HashSet<String>();
+    public Set<String> matches(final String s) {
+        final Set<String> keys = new HashSet<>();
         TrieNode node = this.top;
         for (int i = 0; i < s.length(); ++i) {
             final Character c = s.charAt(i);
@@ -139,7 +140,7 @@ public class TrieSet
         if (node.isWord()) {
             keys.add(s);
         }
-        final HashSet<String> nodes = node.getChildKeys();
+        final Set<String> nodes = node.getChildKeys();
         for (final String key : nodes) {
             keys.add(String.valueOf(s) + key);
         }
@@ -153,10 +154,10 @@ public class TrieSet
     public void debug() {
         final PrintStream out = System.out;
         out.println("Size: " + this.size() + ", Empty: " + this.isEmpty());
-        LinkedList<TrieNode> nodes = new LinkedList<TrieNode>();
+        List<TrieNode> nodes = new LinkedList<>();
         nodes.add(this.top);
         while (!nodes.isEmpty()) {
-            final LinkedList<TrieNode> next = new LinkedList<TrieNode>();
+            final List<TrieNode> next = new LinkedList<>();
             for (final TrieNode node : nodes) {
                 System.out.print("   " + node.getChildMap().size() + "   ");
                 next.addAll(node.getChildMap().values());
@@ -171,10 +172,10 @@ public class TrieSet
         if (base == null) {
             return false;
         }
-        LinkedList<TrieNode> nodes = new LinkedList<TrieNode>();
+        List<TrieNode> nodes = new LinkedList<>();
         nodes.add(base);
         while (!nodes.isEmpty()) {
-            final LinkedList<TrieNode> next = new LinkedList<TrieNode>();
+            final List<TrieNode> next = new LinkedList<>();
             if (nodes.size() > 1) {
                 return true;
             }
@@ -188,10 +189,10 @@ public class TrieSet
     
     public int size() {
         int size = 0;
-        LinkedList<TrieNode> nodes = new LinkedList<TrieNode>();
+        List<TrieNode> nodes = new LinkedList<>();
         nodes.add(this.top);
         while (!nodes.isEmpty()) {
-            final LinkedList<TrieNode> subNodes = new LinkedList<TrieNode>();
+            final List<TrieNode> subNodes = new LinkedList<>();
             for (final TrieNode node : nodes) {
                 if (node.isWord()) {
                     ++size;
@@ -203,7 +204,7 @@ public class TrieSet
         return size;
     }
     
-    public HashSet<String> values() {
+    public Set<String> values() {
         return this.matches("");
     }
     
@@ -258,7 +259,7 @@ public class TrieSet
     private class TrieNode
     {
         private boolean isWord;
-        private HashMap<Character, TrieNode> children;
+        private final Map<Character, TrieNode> children = new HashMap<>(5);
         
         public TrieNode(){
         	this(false);
@@ -270,7 +271,6 @@ public class TrieSet
         */
         public TrieNode(final boolean isWord) {
             super();
-            this.children = new HashMap<Character, TrieNode>(5);
             this.isWord = isWord;
         }
         
@@ -292,8 +292,8 @@ public class TrieSet
             return node;
         }
         
-        public HashSet<String> getChildKeys() {
-            final HashSet<String> values = new HashSet<String>();
+        public Set<String> getChildKeys() {
+            final Set<String> values = new HashSet<>();
             for (final Map.Entry<Character, TrieNode> entry : this.children.entrySet()) {
                 String word = "";
                 final TrieNode node = entry.getValue();
@@ -310,7 +310,7 @@ public class TrieSet
             return values;
         }
         
-        public HashMap<Character, TrieNode> getChildMap() {
+        public Map<Character, TrieNode> getChildMap() {
             return this.children;
         }
         

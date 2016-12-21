@@ -15,6 +15,7 @@ import org.maxgamer.maxbans.util.InputStreamWrapper;
 import java.util.LinkedList;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ClientToServerConnection
 {
@@ -23,18 +24,16 @@ public class ClientToServerConnection
     private String host;
     private int port;
     private String pass;
-    private HashMap<String, Command> commands;
+    private final Map<String, Command> commands = new HashMap<>();
     private Socket socket;
-    private LinkedList<Packet> queue;
+    private final LinkedList<Packet> queue = new LinkedList<>();
     private InputStreamWrapper in;
     private OutputStreamWrapper out;
-    private Thread watcher;
+    private final Thread watcher;
     
     public ClientToServerConnection(final String host, final int port, final String pass) {
         super();
         this.reconnect = true;
-        this.commands = new HashMap<String, Command>();
-        this.queue = new LinkedList<Packet>();
         this.watcher = new Thread() {
             public void run() {
                 while (ClientToServerConnection.this.reconnect) {
@@ -42,7 +41,7 @@ public class ClientToServerConnection
                         try {
                             ClientToServerConnection.this.socket.close();
                         }
-                        catch (IOException ex) {}
+                        catch (IOException ignored) {}
                     }
                     try {
                         ClientToServerConnection.access$4(ClientToServerConnection.this, new Socket(ClientToServerConnection.this.host, ClientToServerConnection.this.port));
@@ -64,7 +63,7 @@ public class ClientToServerConnection
                         try {
                             Thread.sleep(5000L);
                         }
-                        catch (InterruptedException ex2) {}
+                        catch (InterruptedException ignored) {}
                         continue;
                     }
                     catch (IOException e4) {
@@ -74,7 +73,7 @@ public class ClientToServerConnection
                         try {
                             Thread.sleep(5000L);
                         }
-                        catch (InterruptedException ex3) {}
+                        catch (InterruptedException ignored) {}
                         continue;
                     }
                     synchronized (ClientToServerConnection.this.queue) {
@@ -383,7 +382,7 @@ public class ClientToServerConnection
         try {
             this.socket.close();
         }
-        catch (IOException ex) {}
+        catch (IOException ignored) {}
     }
     
     public static void log(final String s) {

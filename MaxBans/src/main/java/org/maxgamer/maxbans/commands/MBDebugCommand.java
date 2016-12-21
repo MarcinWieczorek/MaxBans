@@ -22,7 +22,7 @@ public class MBDebugCommand extends CmdSkeleton
     }
     
     public boolean run(final CommandSender sender, final Command command, final String label, final String[] args) {
-        Printable out = null;
+        Printable out;
         Label_0184: {
             if (args[0].equalsIgnoreCase("file")) {
                 final File file = new File(this.plugin.getDataFolder(), "debug.txt");
@@ -45,7 +45,7 @@ public class MBDebugCommand extends CmdSkeleton
             }
             if (args[0].equalsIgnoreCase("console")) {
                 out = new Printable() {
-                    CommandSender sender = Bukkit.getConsoleSender();
+                    final CommandSender sender = Bukkit.getConsoleSender();
                     
                     public void print(final String s) {
                         this.sender.sendMessage(s);
@@ -84,16 +84,16 @@ public class MBDebugCommand extends CmdSkeleton
         for (int i = 0; i < pass.length(); ++i) {
             sb.append('*');
         }
-        this.plugin.getConfig().set("database.pass", (Object)sb.toString());
+        this.plugin.getConfig().set("database.pass", sb.toString());
         final String syncpass = this.plugin.getConfig().getString("sync.pass");
         sb = new StringBuilder();
         for (int j = 0; j < syncpass.length(); ++j) {
             sb.append('*');
         }
-        this.plugin.getConfig().set("sync.pass", (Object)sb.toString());
+        this.plugin.getConfig().set("sync.pass", sb.toString());
         out.print(this.plugin.getConfig().saveToString());
-        this.plugin.getConfig().set("database.pass", (Object)pass);
-        this.plugin.getConfig().set("sync.pass", (Object)pass);
+        this.plugin.getConfig().set("database.pass", pass);
+        this.plugin.getConfig().set("sync.pass", pass);
         out.print("=== Vanilla Bans (MaxBans does not handle these) ===");
         out.print(Bukkit.getBannedPlayers());
         out.print("=== Online Players ===");

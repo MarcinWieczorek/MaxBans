@@ -1,12 +1,11 @@
 package org.maxgamer.maxbans.commands;
 
-import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.maxgamer.maxbans.Msg;
 import org.maxgamer.maxbans.banmanager.Ban;
 import org.maxgamer.maxbans.banmanager.IPBan;
@@ -32,7 +31,7 @@ public class CheckBanCommand extends CmdSkeleton
                 sender.sendMessage(Msg.get("error.no-permission"));
                 return true;
             }
-            args = new String[] { ((Player)sender).getName() };
+            args = new String[] { sender.getName() };
         }
         else if (args.length <= 0) {
             sender.sendMessage(ChatColor.RED + this.getUsage());
@@ -75,7 +74,7 @@ public class CheckBanCommand extends CmdSkeleton
                     sender.sendMessage(Formatter.primary + "Proxy: " + Formatter.secondary + ((r.getStatus() == DNSBL.DNSStatus.ALLOWED) ? "False" : "True"));
                 }
             }
-            final HashSet<String> dupeip = this.plugin.getBanManager().getUsers(ip);
+            final Set<String> dupeip = this.plugin.getBanManager().getUsers(ip);
             sender.sendMessage(Formatter.primary + "Users: " + Formatter.secondary + ((dupeip == null) ? "0" : dupeip.size()));
         }
         sender.sendMessage(Formatter.secondary + "+---------------------------------------------------+");

@@ -6,7 +6,7 @@ import org.maxgamer.maxbans.util.Util;
 
 public class TempBan extends Ban implements Temporary
 {
-    private long expires;
+    private final long expires;
     
     public TempBan(final String user, final String reason, final String banner, final long created, final long expires) {
         super(user, reason, banner, created);

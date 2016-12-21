@@ -13,7 +13,7 @@ import org.bukkit.event.Listener;
 
 public class ChatListener implements Listener
 {
-    private MaxBans plugin;
+    private final MaxBans plugin;
     
     public ChatListener(final MaxBans mb) {
         super();

@@ -7,9 +7,9 @@ import java.sql.Connection;
 
 public class BufferStatement
 {
-    private Object[] values;
-    private String query;
-    private Exception stacktrace;
+    private final Object[] values;
+    private final String query;
+    private final Exception stacktrace;
     
     public BufferStatement(final String query, final Object... values) {
         super();

@@ -9,6 +9,7 @@ import org.maxgamer.maxbans.MaxBans;
 import org.maxgamer.maxbans.Msg;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public class Util
@@ -16,14 +17,14 @@ public class Util
     //private static final String IP_REGEX = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
     private static Pattern IP_PATTERN;
     private static Pattern VALID_CHARS_PATTERN;
-    private static HashSet<String> yes;
-    private static HashSet<String> no;
+    private static Set<String> yes;
+    private static Set<String> no;
     
     static {
         Util.IP_PATTERN = Pattern.compile("^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
         Util.VALID_CHARS_PATTERN = Pattern.compile("[A-Za-z0-9_]");
-        Util.yes = new HashSet<String>();
-        Util.no = new HashSet<String>();
+        Util.yes = new HashSet<>();
+        Util.no = new HashSet<>();
         Util.yes.add("yes");
         Util.yes.add("true");
         Util.yes.add("on");
@@ -151,7 +152,7 @@ public class Util
         try {
             time = Double.parseDouble(args[1]);
         }
-        catch (NumberFormatException ex) {}
+        catch (NumberFormatException ignored) {}
         for (int j = 0; j < args.length - 2; ++j) {
             args[j] = args[(j + 2)];
         }
@@ -187,7 +188,7 @@ public class Util
     
     public static String getName(final CommandSender s) {
         if (s instanceof Player) {
-            return ((Player)s).getName();
+            return s.getName();
         }
         return "Console";
     }

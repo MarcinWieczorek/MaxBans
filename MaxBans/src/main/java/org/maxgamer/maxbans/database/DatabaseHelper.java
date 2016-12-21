@@ -31,7 +31,7 @@ public class DatabaseHelper
                 db.getConnection().prepareStatement("ALTER TABLE mutes ADD COLUMN reason TEXT(100)").execute();
                 System.out.println("Updating mutes table (Adding reason column)");
             }
-            catch (SQLException ex) {}
+            catch (SQLException ignored) {}
         }
         if (!db.hasTable("iphistory")) {
             createIPHistoryTable(db);
@@ -54,7 +54,7 @@ public class DatabaseHelper
         if (!db.hasTable("players")) {
             createPlayersTable(db);
             final ResultSet rs = db.getConnection().prepareStatement("SELECT * FROM iphistory").executeQuery();
-            final List<String> names = new ArrayList<String>();
+            final List<String> names = new ArrayList<>();
             while (rs.next()) {
                 names.add(rs.getString("name"));
             }
@@ -84,7 +84,7 @@ public class DatabaseHelper
             try {
                 db.getConnection().prepareStatement("ALTER TABLE warnings ADD expires long").execute();
             }
-            catch (SQLException ex2) {}
+            catch (SQLException ignored) {}
         }
         if (!db.hasColumn("history", "name")) {
             try {
@@ -93,7 +93,7 @@ public class DatabaseHelper
                 db.getConnection().prepareStatement("UPDATE history SET banner = 'unknown', name = 'unknown'").execute();
                 System.out.println("History has no banner/name, adding them...");
             }
-            catch (SQLException ex3) {}
+            catch (SQLException ignored) {}
         }
     }
     

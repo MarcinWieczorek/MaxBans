@@ -45,7 +45,7 @@ public class InputStreamBuffer extends ByteArrayInputStream
                 sb.append(c);
             }
         }
-        catch (IndexOutOfBoundsException ex) {}
+        catch (IndexOutOfBoundsException ignored) {}
         return sb.toString();
     }
     
@@ -85,6 +85,6 @@ public class InputStreamBuffer extends ByteArrayInputStream
         try {
             super.close();
         }
-        catch (IOException ex) {}
+        catch (IOException ignored) {}
     }
 }

@@ -1,6 +1,5 @@
 package org.maxgamer.maxbans.bungee;
 
-import org.bukkit.plugin.Plugin;
 import org.maxgamer.maxbans.banmanager.RangeBan;
 import org.maxgamer.maxbans.banmanager.IPBan;
 import org.maxgamer.maxbans.banmanager.Temporary;
@@ -16,11 +15,10 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 
 public class BungeeListener implements PluginMessageListener
 {
-    private MaxBans plugin;
+    private final MaxBans plugin = MaxBans.instance;
     
     public BungeeListener() {
         super();
-        this.plugin = MaxBans.instance;
     }
     
     public void onPluginMessageReceived(final String channel, final Player player, final byte[] message) {
@@ -29,7 +27,7 @@ public class BungeeListener implements PluginMessageListener
             if (in.readUTF().equals("IP")) {
                 final String ip = in.readUTF();
                 MaxBans.instance.getBanManager().logIP(player.getName(), ip);
-                Bukkit.getScheduler().runTaskLater((Plugin)this.plugin, (Runnable)new Runnable() {
+                Bukkit.getScheduler().runTaskLater(this.plugin, new Runnable() {
                     public void run() {
                         final boolean whitelisted = MaxBans.instance.getBanManager().isWhitelisted(player.getName());
                         if (!whitelisted) {

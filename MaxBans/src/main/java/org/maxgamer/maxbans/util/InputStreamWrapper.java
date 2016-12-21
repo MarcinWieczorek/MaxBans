@@ -9,7 +9,7 @@ import java.io.InputStream;
 public class InputStreamWrapper extends InputStream
 {
     public static final String CHARSET = "ISO-8859-1";
-    private InputStream i;
+    private final InputStream i;
     private int read;
     
     public InputStreamWrapper(final InputStream in) {
@@ -77,7 +77,7 @@ public class InputStreamWrapper extends InputStream
         try {
             this.i.close();
         }
-        catch (IOException ex) {}
+        catch (IOException ignored) {}
     }
     
     public int read() {

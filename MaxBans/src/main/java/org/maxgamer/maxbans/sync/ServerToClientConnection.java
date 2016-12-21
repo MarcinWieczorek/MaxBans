@@ -14,7 +14,7 @@ public class ServerToClientConnection
     private SyncServer server;
     private InputStreamWrapper in;
     private OutputStreamWrapper out;
-    private Thread socketListener;
+    private final Thread socketListener;
     
     public ServerToClientConnection(final SyncServer server, final Socket s) {
         super();
@@ -29,7 +29,7 @@ public class ServerToClientConnection
                     try {
                         Thread.sleep(500L);
                     }
-                    catch (InterruptedException ex) {}
+                    catch (InterruptedException ignored) {}
                     final ByteArrayOutputStream read = new ByteArrayOutputStream();
                     byte b;
                     while (ServerToClientConnection.this.in.available() > 0 && (b = ServerToClientConnection.this.in.readByte()) != 0) {
@@ -94,7 +94,7 @@ public class ServerToClientConnection
                     try {
                         ServerToClientConnection.this.socket.close();
                     }
-                    catch (IOException ex2) {}
+                    catch (IOException ignored) {}
                 }
                 if (SyncUtil.isDebug()) {
                     ServerToClientConnection.log("Removing connection.");
@@ -120,7 +120,7 @@ public class ServerToClientConnection
             log("Closing connection!");
             this.socket.close();
         }
-        catch (IOException ex) {}
+        catch (IOException ignored) {}
     }
     
     public void write(final Packet p) {
