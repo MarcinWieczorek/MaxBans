@@ -43,7 +43,6 @@ import java.io.BufferedInputStream;
 import java.net.URL;
 import java.io.FileOutputStream;
 import java.io.File;
-import org.maxgamer.maxbans.util.Metrics;
 import org.maxgamer.maxbans.database.Database;
 import org.maxgamer.maxbans.listeners.ChatCommandListener;
 import org.maxgamer.maxbans.listeners.ChatListener;
@@ -54,6 +53,7 @@ import org.maxgamer.maxbans.sync.SyncServer;
 import org.maxgamer.maxbans.sync.Syncer;
 import org.maxgamer.maxbans.banmanager.BanManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.Metrics;
 
 public class MaxBans extends JavaPlugin {
     public static final String BUNGEE_CHANNEL = "BungeeCord";
