@@ -34,10 +34,12 @@ public class Punishment {
     
     public String toString() {
         String str = String.valueOf(this.getClass().getSimpleName()) + " ID:" + this.id + ((this.reason != null && !this.reason.isEmpty()) ? (", R:" + this.reason) : "") + ", B:" + this.banner + ", C:" + this.created;
+
         if (this instanceof Temporary) {
             final Temporary t = (Temporary)this;
             str = String.valueOf(str) + ", E:" + Util.getTimeUntil(t.getExpires());
         }
+
         return str;
     }
 }

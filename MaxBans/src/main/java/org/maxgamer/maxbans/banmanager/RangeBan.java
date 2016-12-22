@@ -10,6 +10,7 @@ public class RangeBan extends Punishment implements Comparable<RangeBan> {
     
     public RangeBan(final String banner, final String reason, final long created, final IPAddress start, final IPAddress end) {
         super(start + "-" + end, reason, banner, created);
+
         if (start.compareTo(end) > 0) {
             this.start = end;
             this.end = start;
@@ -41,6 +42,7 @@ public class RangeBan extends Punishment implements Comparable<RangeBan> {
             final RangeBan rb = (RangeBan)o;
             return this.start.equals(rb.start) && this.end.equals(rb.end);
         }
+
         return false;
     }
     
